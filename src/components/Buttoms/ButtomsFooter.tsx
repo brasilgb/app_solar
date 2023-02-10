@@ -5,7 +5,7 @@ import { shadowAll } from "../../Styles";
 interface ButtomProps {
     iconButtom?: any;
     textButtom: string;
-    onPress: () => Promise<void>
+    onPress?: () => Promise<void>;
 }
 
 const ButtomsFooter = ({ iconButtom, textButtom, onPress }: ButtomProps) => {

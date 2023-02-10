@@ -75,7 +75,7 @@ const Home = () => {
 
       <AppHeader
         auxClasses={`bg-solar-blue-light ${Platform.OS === 'ios' ? '' : 'pt-3'}`}
-        iconLeft={<Ionicons name="ios-menu" color={"white"} size={40} onPress={() => navigation.navigate('Sidebar')} />}
+        iconLeft={<Ionicons name="ios-menu" color={"white"} size={40} onPress={() => navigation.navigate('SideBar')} />}
         iconRight={<MaterialIcons name="message" color={"white"} size={40} />}
         logo={true}
       />
@@ -148,7 +148,7 @@ const Home = () => {
               iconButtom={<AntDesign name="barcode" color={"white"} size={30} />}
             />
             <ButtomsFooter
-              
+              onPress={async () => navigation.navigate("CustomerLocation")}
               textButtom="Lojas"
               iconButtom={<Entypo name="location-pin" color={"white"} size={30} />}
             />

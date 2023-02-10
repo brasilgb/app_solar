@@ -20,7 +20,7 @@ const AppRoutes = () => {
                 cardShadowEnabled: true,
             }}>
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Sidebar" component={SideBar} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="SideBar" component={SideBar} options={{ gestureEnabled: false }} />
             <Stack.Screen name="CustomerLocation" component={CustomerLocation} options={{ gestureEnabled: false }} />
         </Stack.Navigator>
     )

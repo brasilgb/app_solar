@@ -55,7 +55,7 @@ const SideBar = () => {
             iconLeft: <MaterialIcons name="location-pin" color={"#154295"} size={22} />,
             textList: 'Lojas próximas de você',
             iconRight: '',
-            onPress: '',
+            onPress: () => navigation.navigate('CustomerLocation'),
             active: false,
         },
         {
