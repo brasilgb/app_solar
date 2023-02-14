@@ -80,7 +80,7 @@ const Home = () => {
         logo={true}
       />
 
-      <View className="flex-1 w-full">
+      <View className="flex-1 w-full bg-solar-gray-dark">
         <Text className="bg-solar-blue-light text-sm font-Roboto_500Medium text-white text-center py-3">Olá, seja bem vindo!</Text>
         <View style={{ flex: 1, padding: 0, margin: 0 }}>
           <Carousel

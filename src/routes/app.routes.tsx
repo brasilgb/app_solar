@@ -4,7 +4,7 @@ import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/
 const Stack = createStackNavigator();
 import Home from "../screens/Home";
 import SideBar from "../screens/UserActions/Sidebar";
-import { CustomerLocation } from "../screens/StoreLocation";
+import { CustomerLocation, StoreSelected } from "../screens/StoreLocation";
 
 const AppRoutes = () => {
 
@@ -22,6 +22,7 @@ const AppRoutes = () => {
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="SideBar" component={SideBar} options={{ gestureEnabled: false }} />
             <Stack.Screen name="CustomerLocation" component={CustomerLocation} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="StoreSelected" component={StoreSelected} options={{ gestureEnabled: false }} />
         </Stack.Navigator>
     )
 }

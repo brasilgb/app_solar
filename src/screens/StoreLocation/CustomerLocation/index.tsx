@@ -58,7 +58,7 @@ const CustomerLocation = () => {
   (
     <TouchableOpacity
       activeOpacity={1}
-    // onPress={() => navigation.navigate('SelectedStore', { data: item })}
+      onPress={() => navigation.navigate('StoreSelected', { data: item })}
     >
       <View key={index} className="bg-solar-gray-middle m-2 border border-white rounded-lg" style={shadowAll}>
         <View className="p-4">
@@ -169,10 +169,11 @@ const CustomerLocation = () => {
                   longitude: parseFloat(marker.longitude),
                 }}
               >
-                <Animated.View style={[styles.markerWrap]}>
+                <Animated.View className="items-center justify-center w-14 h-14">
                   <Animated.Image
                     source={require('../../../../assets/map_marker.png')}
-                    style={[styles.marker, scaleStyle]}
+                    style={[scaleStyle]}
+                    className="w-5 h-5"
                     resizeMode="cover"
                   />
                 </Animated.View>
@@ -206,80 +207,3 @@ const CustomerLocation = () => {
 }
 
 export default CustomerLocation;
-
-const styles = StyleSheet.create({
-  map: {
-    flex: 1,
-  },
-  markerWrap: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 50,
-    height: 50,
-  },
-  marker: {
-    width: 30,
-    height: 30,
-  },
-  listContainer: {
-    position: 'absolute',
-    bottom: 20,
-    width: "100%"
-  },
-  listButton: {
-    backgroundColor: "#f7f7f7",
-    marginHorizontal: 10,
-    marginVertical: 10,
-    borderWidth: 1,
-    borderColor: '#ffffff',
-    borderRadius: 15,
-    elevation: 4,
-    shadowColor: '#171717',
-    shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-  },
-  listContent: {
-    padding: 15,
-  },
-  listTitle: {
-    fontSize: 14,
-    color: '#024D9F',
-    fontWeight: 'bold',
-    fontFamily: "Roboto_700Bold",
-    paddingBottom: 5
-  },
-  listEndereco: {
-    fontSize: 12,
-    color: '#555',
-    fontFamily: "Roboto_400Regular",
-  },
-  listEmail: {
-    fontSize: 12,
-    color: '#555',
-    fontFamily: "Roboto_400Regular",
-  },
-  listFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 15,
-    backgroundColor: '#f2f2f2',
-    borderBottomLeftRadius: 15,
-    borderBottomRightRadius: 15,
-    padding: 10,
-    borderTopWidth: 1,
-    borderColor: '#FFF',
-  },
-  listTelefone: {
-    fontSize: 12,
-    color: '#024D9F',
-    fontWeight: 'bold',
-    fontFamily: "Roboto_700Bold",
-  },
-  listDistancia: {
-    fontSize: 12,
-    color: '#FF710F',
-    fontWeight: 'bold',
-    fontFamily: "Roboto_700Bold",
-  },
-})

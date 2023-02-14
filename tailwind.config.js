@@ -15,7 +15,8 @@ module.exports = {
         "solar-gray-dark": "#F1F1F1",
         "solar-gray-middle": "#F8F8F8",
         "solar-gray-light": "#FAFAFA",
-        "solar-orange": "#EC6608",
+        "solar-orange-middle": "#F5B025",
+        "solar-orange-dark": "#EC6608",
       },
       fontFamily: {
         Roboto_300Light: ["Roboto_300Light"],
