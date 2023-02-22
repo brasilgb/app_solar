@@ -55,14 +55,14 @@ const SideBar = () => {
             iconLeft: <MaterialIcons name="location-pin" color={"#154295"} size={22} />,
             textList: 'Lojas próximas de você',
             iconRight: '',
-            onPress: () => navigation.navigate('CustomerLocation'),
+            onPress: () => navigation.navigate('CustomerLocation', { data: false }),
             active: false,
         },
         {
             iconLeft: <MaterialIcons name="message" color={"#154295"} size={22} />,
             textList: 'Fale conosco',
             iconRight: '',
-            onPress: '',
+            onPress: () => navigation.navigate("ContactUs"),
             active: false,
         },
         {
@@ -97,7 +97,7 @@ const SideBar = () => {
 
     return (
 
-        <AppLayout bgColor="bg-white">
+        <AppLayout bgColor="bg-white" statusBarBG="#F1F1F1" statusBarStyle="dark" >
             <ScrollView className="w-full" horizontal={false} showsVerticalScrollIndicator={false}>
                 <AppHeader
                     auxClasses={`bg-solar-gray-dark ${Platform.OS === 'ios' ? '' : 'pt-3'}`}
@@ -112,8 +112,8 @@ const SideBar = () => {
                             <Ionicons name="ios-person-circle-outline" color={"#154295"} size={80} />
                         </View>
                         <View className="flex-auto pl-2">
-                            <Text className="font-Roboto_400Regular text-2xl text-solar-blue-dark ">Bem Vindo(a)</Text>
-                            <Text className="font-Roboto_500Medium text-sm text-solar-blue-dark">Faça o login e aproveite o melhor do aplicativo</Text>
+                            <Text allowFontScaling={false} className="font-Poppins_400Regular text-2xl text-solar-blue-dark ">Bem Vindo(a)</Text>
+                            <Text allowFontScaling={false} className="font-Poppins_500Medium text-sm text-solar-blue-dark">Faça o login e aproveite o melhor do aplicativo</Text>
                         </View>
                     </View>
                     <View className="flex-col justify-start border-t border-gray-400 mx-2">
@@ -128,7 +128,7 @@ const SideBar = () => {
                                         {item.iconLeft}
                                     </View>
                                     <View className="flex-auto">
-                                        <Text className="font-Roboto_400Regular text-base text-solar-blue-dark">{item.textList}</Text>
+                                        <Text allowFontScaling={false} className="font-Poppins_400Regular text-base text-solar-blue-dark">{item.textList}</Text>
                                     </View>
                                     <View>
                                         {item.iconRight}
@@ -140,13 +140,20 @@ const SideBar = () => {
                     </View>
                     <View className="flex-row items-center justify-center pt-4 pb-8">
                         <View className="flex-grow items-center">
-                            <Text className="font-Roboto_500Medium text-xs text-solar-blue-dark">Perguntas frequentes</Text>
+                            <TouchableOpacity
+                            onPress={() => navigation.navigate("CommonQuestions", { data: {key: 0, active: true} })}
+                            >
+                                <Text allowFontScaling={false} className="font-Poppins_500Medium text-xs text-solar-blue-dark">
+                                    Perguntas frequentes
+                                </Text>
+                            </TouchableOpacity>
                         </View>
                         <View className="flex-grow items-center">
-                            <Text className="font-Roboto_500Medium text-xs text-solar-blue-dark">Política de privacidade</Text>
+                            <Text allowFontScaling={false} className="font-Poppins_500Medium text-xs text-solar-blue-dark">Política de privacidade</Text>
                         </View>
                     </View>
                 </View>
+
             </ScrollView>
         </AppLayout>
 

@@ -7,5 +7,5 @@ export const shadowAll = {
     },
     shadowOpacity: 0.27,
     shadowRadius: 2,
-    elevation: 3,
+    elevation: 4,
 }

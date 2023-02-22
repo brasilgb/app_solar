@@ -1,6 +1,10 @@
 export type RootStackParamList = {
     Home: undefined;
     SideBar: undefined;
-    CustomerLocation: undefined;
-    StoreSelected: { data: any }
+    CustomerLocation:  { data: any };
+    StoreSelected: { data: any };
+    CustomerLocationList: { data: any };
+    CustomerCitiesList: undefined;
+    ContactUs: undefined;
+    CommonQuestions: {data: any };
 }

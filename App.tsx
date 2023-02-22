@@ -1,26 +1,26 @@
 import 'react-native-gesture-handler';
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import {
-  Roboto_100Thin,
-  Roboto_100Thin_Italic,
-  Roboto_300Light,
-  Roboto_300Light_Italic,
-  Roboto_400Regular,
-  Roboto_400Regular_Italic,
-  Roboto_500Medium,
-  Roboto_500Medium_Italic,
-  Roboto_700Bold,
-  Roboto_700Bold_Italic,
-  Roboto_900Black,
-  Roboto_900Black_Italic,
-} from '@expo-google-fonts/roboto';
+  Poppins_100Thin,
+  Poppins_100Thin_Italic,
+  Poppins_300Light,
+  Poppins_300Light_Italic,
+  Poppins_400Regular,
+  Poppins_400Regular_Italic,
+  Poppins_500Medium,
+  Poppins_500Medium_Italic,
+  Poppins_700Bold,
+  Poppins_700Bold_Italic,
+  Poppins_900Black,
+  Poppins_900Black_Italic,
+} from '@expo-google-fonts/poppins';
 
 import Routes from "./src/routes";
 import { AuthProvider } from "./src/contexts/auth";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const App = () => {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -30,18 +30,18 @@ const App = () => {
       try {
         await SplashScreen.preventAutoHideAsync();
         await Font.loadAsync({
-          Roboto_100Thin,
-          Roboto_100Thin_Italic,
-          Roboto_300Light,
-          Roboto_300Light_Italic,
-          Roboto_400Regular,
-          Roboto_400Regular_Italic,
-          Roboto_500Medium,
-          Roboto_500Medium_Italic,
-          Roboto_700Bold,
-          Roboto_700Bold_Italic,
-          Roboto_900Black,
-          Roboto_900Black_Italic,
+          Poppins_100Thin,
+          Poppins_100Thin_Italic,
+          Poppins_300Light,
+          Poppins_300Light_Italic,
+          Poppins_400Regular,
+          Poppins_400Regular_Italic,
+          Poppins_500Medium,
+          Poppins_500Medium_Italic,
+          Poppins_700Bold,
+          Poppins_700Bold_Italic,
+          Poppins_900Black,
+          Poppins_900Black_Italic,
         });
 
         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -68,13 +68,13 @@ const App = () => {
   }
 
   return (
-    <View className="flex-1" onLayout={onLayout}>
+    <SafeAreaProvider className="flex-1" onLayout={onLayout}>
       <NavigationContainer>
         <AuthProvider>
           <Routes />
         </AuthProvider>
       </NavigationContainer>
-    </View>
+    </SafeAreaProvider>
   );
 };
 

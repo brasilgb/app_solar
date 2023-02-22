@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Text, Platform, View, StyleSheet, Animated, Dimensions } from "react-native";
+import { Text, Platform, View, Animated, Dimensions, Modal as ModalMap, Modal as ModalList } from "react-native";
 import { AppHeader } from "../../../components/Headers";
 import AppLayout from "../../../layouts/AppLayout";
 import { Ionicons, FontAwesome5, Entypo } from "@expo/vector-icons";
@@ -23,7 +23,10 @@ interface ListCitiesProps {
   index: any;
 }
 
-const CustomerLocation = () => {
+const CustomerLocation = ({ route }: any) => {
+
+  const { data } = route?.params;
+
   const { positionGlobal } = useContext(AuthContext);
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -42,17 +45,35 @@ const CustomerLocation = () => {
 
   useEffect(() => {
     async function getLocationLojasProxima() {
-      await serviceapp.get(`http://services.gruposolar.com.br:8082/servicecomercial/servlet/(WS_LOJAS_PROXIMA)?latitude=${positionGlobal[0]}&longitude=${positionGlobal[1]}`)
+      let lojas = data ? 'WS_CARREGA_LOJAS' : 'WS_LOJAS_PROXIMA';
+      await serviceapp.get(`http://services.gruposolar.com.br:8082/servicecomercial/servlet/(${lojas})?latitude=${positionGlobal[0]}&longitude=${positionGlobal[1]}`)
         .then((response) => {
-          setLocationLojasProxima(response.data.resposta.data);
+          if (data) {
+            let result = response.data.resposta.data.filter((l: any) => (l.cidade === data))
+            setLocationLojasProxima(result);
+            const { latitude, longitude } = result[0];
+            setTimeout(() => {
+              const setregion = {
+                latitude: parseFloat(latitude !== "" ? latitude : 0),
+                longitude: parseFloat(longitude !== "" ? longitude : 0),
+                latitudeDelta: 0.0043,
+                longitudeDelta: 0.0034
+              };
+              if (mapRef.current) {
+                mapRef.current.animateToRegion(setregion, 300);
+              }
+            }, 1000);
+          } else {
+            setLocationLojasProxima(response.data.resposta.data);
+          }
+
         })
         .catch((err) => {
           console.log(err);
         });
     };
     getLocationLojasProxima();
-  }, [location]);
-
+  }, [location, data]);
 
   const renderItem = ({ item, index }: ListCitiesProps) =>
   (
@@ -62,13 +83,13 @@ const CustomerLocation = () => {
     >
       <View key={index} className="bg-solar-gray-middle m-2 border border-white rounded-lg" style={shadowAll}>
         <View className="p-4">
-          <Text numberOfLines={1} className="text-base text-solar-blue-dark font-Roboto_700Bold pb-1.5">{item.cidade}</Text>
-          <Text numberOfLines={1} className="text-xs text-gray-500 font-Roboto_400Regular pb-1.5">{item.endereco}</Text>
-          <Text numberOfLines={1} className="text-xs text-gray-500 font-Roboto_400Regular pb-1.5">{item.email}</Text>
+          <Text allowFontScaling={false} numberOfLines={1} className="text-base text-solar-blue-dark font-Poppins_700Bold pb-1.5">{item.cidade}</Text>
+          <Text allowFontScaling={false} numberOfLines={1} className="text-xs text-gray-500 font-Poppins_400Regular pb-1.5">{item.endereco}</Text>
+          <Text allowFontScaling={false} numberOfLines={1} className="text-xs text-gray-500 font-Poppins_400Regular pb-1.5">{item.email}</Text>
         </View>
         <View className="flex-row items-center justify-between bg-solar-gray-dark px-2 pt-2 border-t border-white">
-          <Text numberOfLines={1} className="text-base text-solar-yellow-dark font-Roboto_700Bold pb-1.5">{item.telefone}</Text>
-          <Text numberOfLines={1} className="text-base text-solar-yellow-dark font-Roboto_700Bold pb-1.5">{item.distancia}</Text>
+          <Text allowFontScaling={false} numberOfLines={1} className="text-base text-solar-blue-dark font-Poppins_500Medium pb-1.5">{item.telefone}</Text>
+          <Text allowFontScaling={false} numberOfLines={1} className="text-base text-solar-yellow-dark font-Poppins_500Medium pb-1.5">{item.distancia}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -105,23 +126,22 @@ const CustomerLocation = () => {
     return { scale };
   });
 
-
   return (
-    <AppLayout bgColor="bg-solar-gray-light">
+    <AppLayout bgColor="bg-solar-gray-light" statusBarBG="#00AEEF" statusBarStyle="light">
 
       <AppHeader
         auxClasses={`bg-solar-blue-light ${Platform.OS === 'ios' ? '' : 'pt-0'}`}
         iconLeft={<Ionicons name="ios-menu" color={"white"} size={40} onPress={() => navigation.navigate('SideBar')} />}
-        iconRight={<FontAwesome5 name="list-alt" color={"white"} size={40} />}
+        iconRight={<FontAwesome5 name="list-alt" color={"white"} size={40} onPress={() => navigation.navigate('CustomerLocationList', { data: locationLojasProxima })} />}
         logo={true}
       />
       <View className="flex-col">
         <View className="flex-col items-center">
           <View className="pt-2">
-            <Text className="font-Roboto_400Regular text-2xl text-solar-blue-dark">Lojas mais próximas</Text>
+            <Text allowFontScaling={false} className="font-Poppins_400Regular text-2xl text-solar-blue-dark">Lojas mais próximas</Text>
           </View>
           <View className="py-2">
-            <Text className="font-Roboto_400Regular text-base text-solar-blue-dark">Encontre a loja Solar mais próxima de você</Text>
+            <Text allowFontScaling={false} className="font-Poppins_400Regular text-base text-solar-blue-dark">Encontre a loja Solar mais próxima de você</Text>
           </View>
         </View>
 
@@ -131,16 +151,17 @@ const CustomerLocation = () => {
             <Entypo name="location-pin" color={"white"} size={24} />
           </View>
           <View className="flex-grow items-start justify-between py-1 pl-3 h-14">
-            <Text className="font-Roboto_400Regular text-xs text-white">Sua Localização</Text>
-            <Text className="font-Roboto_400Regular text-base text-white">LOCALIZAÇÂO</Text>
+            <Text allowFontScaling={false} className="font-Poppins_400Regular text-xs text-white">Sua Localização</Text>
+            <Text allowFontScaling={false} className="font-Poppins_400Regular text-base text-white">{data ? data.split(" - ")[0] : ''}</Text>
           </View>
 
           <View className="flex-none pr-4">
             <TouchableOpacity
               className="rounded-3xl py-2 px-4 bg-yellow-500"
               style={shadowAll}
+              onPress={() => navigation.navigate("CustomerCitiesList")}
             >
-              <Text className="font-Roboto_500Medium text-sm text-solar-blue-dark">Alterar</Text>
+              <Text allowFontScaling={false} className="font-Poppins_500Medium text-sm text-solar-blue-dark">Alterar</Text>
             </TouchableOpacity>
           </View>
 

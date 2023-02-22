@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { View, Text, Dimensions, StyleSheet, Image, Platform } from "react-native";
+import { View, Text, Dimensions, StyleSheet, Image, Platform, Linking } from "react-native";
 import AppLayout from "../../layouts/AppLayout";
 import { Ionicons, MaterialIcons, Entypo, MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 import * as WebBrowser from 'expo-web-browser';
@@ -71,17 +71,17 @@ const Home = () => {
   }
 
   return (
-    <AppLayout bgColor="bg-solar-blue-light">
+    <AppLayout bgColor="bg-solar-blue-light" statusBarBG="#00AEEF" statusBarStyle="light" >
 
       <AppHeader
         auxClasses={`bg-solar-blue-light ${Platform.OS === 'ios' ? '' : 'pt-3'}`}
         iconLeft={<Ionicons name="ios-menu" color={"white"} size={40} onPress={() => navigation.navigate('SideBar')} />}
-        iconRight={<MaterialIcons name="message" color={"white"} size={40} />}
+        iconRight={<MaterialIcons name="message" color={"white"} size={40} onPress={() => navigation.navigate("ContactUs")} />}
         logo={true}
       />
 
       <View className="flex-1 w-full bg-solar-gray-dark">
-        <Text className="bg-solar-blue-light text-sm font-Roboto_500Medium text-white text-center py-3">Olá, seja bem vindo!</Text>
+        <Text allowFontScaling={false} className="bg-solar-blue-light text-sm font-Poppins_500Medium text-white text-center py-3">Olá, seja bem vindo!</Text>
         <View style={{ flex: 1, padding: 0, margin: 0 }}>
           <Carousel
             layout="default"
@@ -133,9 +133,10 @@ const Home = () => {
       </View>
 
       <AppFooter>
-        <View className="flex-row border-b-[5px] border-solar-orange pb-3 pl-[3.5px] bg-solar-gray-light">
+        <View className="flex-row border-b-[5px] border-solar-orange-dark pb-3 pl-[3.5px] bg-solar-gray-light">
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <ButtomsFooter
+              onPress={() => Linking.openURL("http://lojasolar.com.br/")}
               textButtom="Comprar"
               iconButtom={<MaterialCommunityIcons name="basket-plus-outline" color={"white"} size={30} />}
             />
@@ -148,7 +149,7 @@ const Home = () => {
               iconButtom={<AntDesign name="barcode" color={"white"} size={30} />}
             />
             <ButtomsFooter
-              onPress={async () => navigation.navigate("CustomerLocation")}
+              onPress={() => navigation.navigate("CustomerLocation", { data: false })}
               textButtom="Lojas"
               iconButtom={<Entypo name="location-pin" color={"white"} size={30} />}
             />
@@ -157,6 +158,7 @@ const Home = () => {
               iconButtom={<Entypo name="tools" color={"white"} size={30} />}
             />
             <ButtomsFooter
+              onPress={() => navigation.navigate("ContactUs")}
               textButtom="Fale Conosco"
               iconButtom={<MaterialIcons name="message" color={"white"} size={30} />}
             />
