@@ -17,15 +17,13 @@ const CommonQuestions = ({ route }: any) => {
     const { data } = route?.params;
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-    const [activeButtom1, setActiveButtom1] = useState<boolean>(true);
-    const [activeButtom2, setActiveButtom2] = useState<boolean>(false);
+    const [activeIndex, setActiveIndex] = useState<string>('Comercial');
     const [currentCategory, setCurrentCategory] = useState<string>("Comercial");
     const [carregaFaq, setCarregaFaq] = useState([]);
-    const [carregaKey, setCarregaKey] = useState();
     const [currentIndex, setCurrentIndex] = useState(null);
     const [showContent, setShowContent] = useState(false);
     const animationController = useRef(new Animated.Value(0)).current;
-    const fadeAnim = useRef(new Animated.Value(0)).current;
+
     const toggleListItem = (ind: any) => {
         const config = {
             duration: 300,
@@ -35,12 +33,11 @@ const CommonQuestions = ({ route }: any) => {
         Animated.timing(animationController, config).start();
         LayoutAnimation.configureNext(toggleAnimation);
         setCurrentIndex(ind === currentIndex ? null : ind);
-        setShowContent(!showContent);
     };
 
-    const arrowTransform = animationController.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['0deg', '180deg']
+    const handleSetQuestions = ((category: any) => {
+        setActiveIndex(category === activeIndex ? null : category)
+        setCurrentCategory(category);
     });
 
     useEffect(() => {
@@ -58,11 +55,6 @@ const CommonQuestions = ({ route }: any) => {
         getCarregaFaq();
     }, [currentCategory])
 
-    const handleSetQuestions = ((category: any) => {
-        setActiveButtom1(!activeButtom1)
-        setActiveButtom2(!activeButtom2)
-        setCurrentCategory(category);
-    });
     const [right, setRight] = useState(new Animated.Value(Dimensions.get('window').width - 100));
     const [radius, setRadius] = useState(new Animated.Value(0));
 
@@ -119,12 +111,12 @@ const CommonQuestions = ({ route }: any) => {
                     <ButtomsQuestions
                         onpress={() => { handleSetQuestions("Comercial"); rightToLeft() }}
                         text="Comercial"
-                        activeButtom={activeButtom1}
+                        currentIndex={activeIndex}
                     />
                     <ButtomsQuestions
                         onpress={() => { handleSetQuestions("Crediário"); leftToRight() }}
                         text="Crediário"
-                        activeButtom={activeButtom2}
+                        currentIndex={activeIndex}
                     />
                 </View>
                 <View className="flex-row items-center justify-around w-full pt-6">
@@ -139,13 +131,11 @@ const CommonQuestions = ({ route }: any) => {
                         bottom: -5
                     }}
                     >
-
                         <View className="w-6 h-6 bg-[#e4e2e2] rotate-45" />
                     </Animated.View>
-
                 </View>
 
-                <View className="flex-1 bg-[#e4e2e2] w-full rounded-t-3xl mx-0.5">
+                <View className="flex-1 bg-[#e4e2e2] w-full rounded-t-3xl">
 
                     {carregaFaq.map((categoria: any, icate: any) => (
                         categoria.perguntas.map((ca: any, ind: any) => (

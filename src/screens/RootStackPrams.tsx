@@ -7,4 +7,6 @@ export type RootStackParamList = {
     CustomerCitiesList: undefined;
     ContactUs: undefined;
     CommonQuestions: {data: any };
+    PrivacyPolice: undefined;
+    SignIn: undefined;
 }

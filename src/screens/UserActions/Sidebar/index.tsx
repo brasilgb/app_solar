@@ -14,21 +14,28 @@ interface ItemsSideBarProps {
     textList: string;
     iconRight: any;
     onPress: any;
-    active: boolean;
+    active?: any;
 }
 
 const SideBar = () => {
     const { signed } = useContext(AuthContext);
-
+    
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
     const ListSideBar = [
         {
             iconLeft: <Ionicons name="md-person" color={"#154295"} size={22} />,
+            textList: 'Login',
+            iconRight: <MaterialIcons name="arrow-forward-ios" color={"#FAA335"} size={22} />,
+            onPress: () => navigation.navigate("SignIn"),
+            active: false,
+        },
+        {
+            iconLeft: <Ionicons name="md-person" color={"#154295"} size={22} />,
             textList: 'Minha conta',
             iconRight: <MaterialIcons name="arrow-forward-ios" color={"#FAA335"} size={22} />,
             onPress: '',
-            active: false,
+            active: true,
         },
         {
             iconLeft: <Fontisto name="wallet" color={"#154295"} size={22} />,
@@ -56,14 +63,14 @@ const SideBar = () => {
             textList: 'Lojas próximas de você',
             iconRight: '',
             onPress: () => navigation.navigate('CustomerLocation', { data: false }),
-            active: false,
+            active: signed || !signed && false,
         },
         {
             iconLeft: <MaterialIcons name="message" color={"#154295"} size={22} />,
             textList: 'Fale conosco',
             iconRight: '',
             onPress: () => navigation.navigate("ContactUs"),
-            active: false,
+            active: signed || !signed && false,
         },
         {
             iconLeft: <Fontisto name="wallet" color={"#154295"} size={22} />,
@@ -135,13 +142,12 @@ const SideBar = () => {
                                     </View>
                                 </View>
                             </TouchableOpacity>
-
                         ))}
                     </View>
                     <View className="flex-row items-center justify-center pt-4 pb-8">
                         <View className="flex-grow items-center">
                             <TouchableOpacity
-                            onPress={() => navigation.navigate("CommonQuestions", { data: {key: 0, active: true} })}
+                                onPress={() => navigation.navigate("CommonQuestions", { data: { key: 0, active: true } })}
                             >
                                 <Text allowFontScaling={false} className="font-Poppins_500Medium text-xs text-solar-blue-dark">
                                     Perguntas frequentes
@@ -149,7 +155,11 @@ const SideBar = () => {
                             </TouchableOpacity>
                         </View>
                         <View className="flex-grow items-center">
-                            <Text allowFontScaling={false} className="font-Poppins_500Medium text-xs text-solar-blue-dark">Política de privacidade</Text>
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate('PrivacyPolice')}
+                            >
+                                <Text allowFontScaling={false} className="font-Poppins_500Medium text-xs text-solar-blue-dark">Política de privacidade</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>

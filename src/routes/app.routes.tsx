@@ -5,7 +5,8 @@ const Stack = createStackNavigator<RootStackParamList>();
 import Home from "../screens/Home";
 import { CustomerLocation, StoreSelected, CustomerLocationList, CustomerCitiesList } from "../screens/StoreLocation";
 import { RootStackParamList } from "../screens/RootStackPrams";
-import { SideBar, ContactUs, CommonQuestions } from "../screens/UserActions";
+import { SideBar, ContactUs, CommonQuestions, PrivacyPolicy } from "../screens/UserActions";
+import { SignIn } from "../screens/Auth";
 
 interface NavigationProps {
     header?: ((props: StackHeaderProps) => React.ReactNode) | undefined;
@@ -36,6 +37,8 @@ const AppRoutes = () => {
             <Stack.Screen name="CustomerCitiesList" component={CustomerCitiesList} options={{ gestureEnabled: false, cardStyleInterpolator: CardStyleInterpolators.forNoAnimation }} />
             <Stack.Screen name="ContactUs" component={ContactUs} options={{ gestureEnabled: false }} />
             <Stack.Screen name="CommonQuestions" component={CommonQuestions} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="PrivacyPolice" component={PrivacyPolicy} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="SignIn" component={SignIn} options={{ gestureEnabled: false }} />
             </Stack.Navigator>
     )
 }

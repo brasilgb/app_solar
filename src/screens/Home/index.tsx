@@ -44,7 +44,6 @@ const Home = () => {
 
   let colorBar = Platform.OS === 'ios' ? 'rgba(0, 162, 227, 0)' : '#00AEEF';
   const handlePressButtonAsync = async (url: any) => {
-    console.log(url);
     let result = await WebBrowser.openBrowserAsync(url, {
       toolbarColor: colorBar,
       controlsColor: "#FFF"
@@ -136,7 +135,7 @@ const Home = () => {
         <View className="flex-row border-b-[5px] border-solar-orange-dark pb-3 pl-[3.5px] bg-solar-gray-light">
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <ButtomsFooter
-              onPress={() => Linking.openURL("http://lojasolar.com.br/")}
+              onPress={() => handlePressButtonAsync('https://www.lojasolar.com.br/')}
               textButtom="Comprar"
               iconButtom={<MaterialCommunityIcons name="basket-plus-outline" color={"white"} size={30} />}
             />
