@@ -67,7 +67,7 @@ const CustomerLocationList = ({ route }: any) => {
           </View>
           <View className="flex-grow items-start justify-between py-1 pl-3 h-14">
             <Text allowFontScaling={false} className="font-Poppins_400Regular text-xs text-white">Sua Localização</Text>
-            <Text allowFontScaling={false} className="font-Poppins_400Regular text-base text-white">LOCALIZAÇÂO</Text>
+            <Text allowFontScaling={false} className="font-Poppins_400Regular text-base text-white">{data[0].cidade.split("-")[0]}</Text>
           </View>
 
           <View className="flex-none pr-4">

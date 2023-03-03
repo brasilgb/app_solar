@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {URL_DATA} from "../Constants";
 
 let BASE_URL = '';
 
@@ -11,8 +12,10 @@ const serviceapp = axios.create({
 
 serviceapp.interceptors.request.use(async (request) => {
 
-  request.baseURL = `http://services.gruposolar.com.br:8082/servicecomercial/servlet/isCobol`;
-  BASE_URL = `http://services.gruposolar.com.br:8082/servicecomercial/servlet/isCobol`;
+  // request.baseURL = `http://services.gruposolar.com.br:8082/servicecomercial/servlet/isCobol`;
+  // BASE_URL = `http://services.gruposolar.com.br:8082/servicecomercial/servlet/isCobol`;
+  request.baseURL = URL_DATA;
+  BASE_URL = URL_DATA;
 
   requestCustom = request;
   data = request.data;

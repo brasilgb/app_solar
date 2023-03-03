@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../RootStackPrams";
 import { AuthContext } from "../../contexts/auth";
-
+import { URL_DATA } from "../../Constants"
 export const SLIDER_WIDTH = Dimensions.get('window').width
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 1)
 interface Props {
@@ -31,7 +31,7 @@ const Home = () => {
 
   useEffect(() => {
     async function getLocationLojas() {
-      await serviceapp.get(`http://services.gruposolar.com.br:8082/servicecomercial/servlet/(WS_CARROCEL_PROMOCAO)`)
+      await serviceapp.get(`${URL_DATA}(WS_CARROCEL_PROMOCAO)`)
         .then((response) => {
           setCarrocelData(response.data.resposta.data.carrocel);
         })
@@ -140,6 +140,7 @@ const Home = () => {
               iconButtom={<MaterialCommunityIcons name="basket-plus-outline" color={"white"} size={30} />}
             />
             <ButtomsFooter
+              onPress={() => navigation.navigate("NoRegistry", {data: '28064375045'})}
               textButtom="Pagamentos"
               iconButtom={<MaterialCommunityIcons name="barcode" color={"white"} size={30} />}
             />

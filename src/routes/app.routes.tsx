@@ -5,8 +5,8 @@ const Stack = createStackNavigator<RootStackParamList>();
 import Home from "../screens/Home";
 import { CustomerLocation, StoreSelected, CustomerLocationList, CustomerCitiesList } from "../screens/StoreLocation";
 import { RootStackParamList } from "../screens/RootStackPrams";
-import { SideBar, ContactUs, CommonQuestions, PrivacyPolicy } from "../screens/UserActions";
-import { SignIn } from "../screens/Auth";
+import { SideBar, ContactUs, CommonQuestions, PrivacyPolicy, LoadCities } from "../screens/UserActions";
+import { CheckPassword, NoRegistry, SignIn, RegisterUser, Registered } from "../screens/Auth";
 
 interface NavigationProps {
     header?: ((props: StackHeaderProps) => React.ReactNode) | undefined;
@@ -39,7 +39,12 @@ const AppRoutes = () => {
             <Stack.Screen name="CommonQuestions" component={CommonQuestions} options={{ gestureEnabled: false }} />
             <Stack.Screen name="PrivacyPolice" component={PrivacyPolicy} options={{ gestureEnabled: false }} />
             <Stack.Screen name="SignIn" component={SignIn} options={{ gestureEnabled: false }} />
-            </Stack.Navigator>
+            <Stack.Screen name="CheckPassword" component={CheckPassword} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="NoRegistry" component={NoRegistry} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="RegisterUser" component={RegisterUser} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="LoadCities" component={LoadCities} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="Registered" component={Registered} options={{ gestureEnabled: false }} />
+        </Stack.Navigator>
     )
 }
 

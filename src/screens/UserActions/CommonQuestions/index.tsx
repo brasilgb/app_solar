@@ -8,7 +8,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../RootStackPrams";
 import { ButtomsQuestions } from "../../../components/Buttoms";
 import serviceapp from "../../../services/serviceapp";
-import { URL_DATA } from "../../../components/Constant";
+import { URL_DATA } from "../../../Constants";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { toggleAnimation } from "../../../components/animations/toggleAnimation";
 

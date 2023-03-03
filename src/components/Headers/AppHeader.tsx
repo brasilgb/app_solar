@@ -10,7 +10,7 @@ interface HeaderProps {
 
 const AppHeader = ({ auxClasses, iconLeft, iconRight, logo }: HeaderProps) => {
     return (
-        <View className={`${auxClasses} flex-row items-center justify-between w-full px-6`}>
+        <View className={`${auxClasses} flex-row items-center justify-between w-full px-4`}>
             <View className="py-1">
                 {iconLeft}
             </View>

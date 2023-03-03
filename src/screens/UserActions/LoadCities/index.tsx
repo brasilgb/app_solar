@@ -1,32 +1,36 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Platform, FlatList, TextInput } from "react-native";
 import { AppHeader } from "../../../components/Headers";
 import AppLayout from "../../../layouts/AppLayout";
 import { RootStackParamList } from "../../RootStackPrams";
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import serviceapp from "../../../services/serviceapp";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { URL_DATA } from "../../../Constants";
+import { AuthContext } from "../../../contexts/auth";
 
 interface CitiesProps {
   item: any;
   index: any;
 }
 
-const CustomerCitiesList = () => {
+const LoadCities = ({ route }: any) => {
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const { data } = route.params;
+  const { setCidadeClienteState } = useContext(AuthContext);
   const [search, setSearch] = useState('');
   const [masterData, setMasterData] = useState<any>([]);
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
     async function getLocationLojas() {
-      await serviceapp.get(`${URL_DATA}(WS_CARREGA_LOJAS)`)
+      await serviceapp.get(`${URL_DATA}(WS_CARREGA_CIDADE)?uf=${data.uf}`)
         .then((response) => {
           setMasterData(response.data.resposta.data.map((c: any) => c.cidade).filter((value: any, index: any, self: any) => self.indexOf(value) === index));
-          setFilteredData(response.data.resposta.data.map((c: any) => c.cidade).filter((value: any, index: any, self: any) => self.indexOf(value) === index));
+        setFilteredData(response.data.resposta.data.map((c: any) => c.cidade).filter((value: any, index: any, self: any) => self.indexOf(value) === index));
         })
         .catch((err) => {
           console.log(err);
@@ -36,9 +40,9 @@ const CustomerCitiesList = () => {
   }, []);
 
   const RenderCities = ({ item, index }: CitiesProps) => (
-    <TouchableOpacity 
-    key={index}
-    onPress={() => navigation.navigate('CustomerLocation', { data: item }) }
+    <TouchableOpacity
+      key={index}
+      onPress={() => setCidadeClienteState(item)}
     >
       <View className="flex-row border-t border-gray-400 py-3.5 px-2.5">
         <View>
@@ -80,7 +84,7 @@ const CustomerCitiesList = () => {
         <View className="w-full flex-row items-center justify-start bg-solar-gray-dark rounded-full pl-3">
           <MaterialIcons className="" name="search" size={32} color="#024D9F" onPress={() => navigation.goBack()} />
           <TextInput
-            className=" py-3 pl-1 text-[18px] text-gray-600 font-Poppins_500Medium w-full"
+            className=" py-3 pl-1 text-[18px] text-gray-600 font-Poppins_500Medium"
             onChangeText={(text) => searchFilter(text)}
             value={search}
             underlineColorAndroid="transparent"
@@ -103,4 +107,4 @@ const CustomerCitiesList = () => {
   )
 }
 
-export default CustomerCitiesList;
+export default LoadCities;

@@ -9,4 +9,9 @@ export type RootStackParamList = {
     CommonQuestions: {data: any };
     PrivacyPolice: undefined;
     SignIn: undefined;
+    CheckPassword: { data: any }
+    NoRegistry: { data: any }
+    RegisterUser: { data: any }
+    LoadCities: { data: any }
+    Registered: { data: any }
 }

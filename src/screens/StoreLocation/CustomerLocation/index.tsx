@@ -12,6 +12,7 @@ import Carousel from 'react-native-snap-carousel';
 import { shadowAll } from "../../../Styles";
 import { AuthContext } from "../../../contexts/auth";
 import serviceapp from "../../../services/serviceapp";
+import { URL_DATA } from "../../../Constants";
 
 const { width, height } = Dimensions.get("window");
 
@@ -46,7 +47,7 @@ const CustomerLocation = ({ route }: any) => {
   useEffect(() => {
     async function getLocationLojasProxima() {
       let lojas = data ? 'WS_CARREGA_LOJAS' : 'WS_LOJAS_PROXIMA';
-      await serviceapp.get(`http://services.gruposolar.com.br:8082/servicecomercial/servlet/(${lojas})?latitude=${positionGlobal[0]}&longitude=${positionGlobal[1]}`)
+      await serviceapp.get(`${URL_DATA}(${lojas})?latitude=${positionGlobal[0]}&longitude=${positionGlobal[1]}`)
         .then((response) => {
           if (data) {
             let result = response.data.resposta.data.filter((l: any) => (l.cidade === data))

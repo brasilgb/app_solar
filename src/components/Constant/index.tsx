@@ -1,1 +1,0 @@
-export const URL_DATA = "http://services.gruposolar.com.br:8082/servicecomercial/servlet/isCobol/";

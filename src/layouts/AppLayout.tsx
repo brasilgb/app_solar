@@ -12,11 +12,11 @@ interface Props {
 
 const AppLayout = ({ children, bgColor, statusBarBG, statusBarStyle }: Props) => {
     return (
-        <SafeAreaView className={`flex-1 items-center justify-start ${bgColor} w-full`}>
+        <SafeAreaView className={`flex-1 ${bgColor}`}>
             <AppStatusBar style={statusBarStyle} background={statusBarBG} />
-            {children}
-            <View className={`${Platform.OS === 'ios' ? "-m-[17px]" : ""}`}></View>
+                {children}
+            <View className={`${Platform.OS === 'ios' ? "-m-[17px]" : ""}`} />
         </SafeAreaView>
     )
-}
+};
 export default AppLayout;
