@@ -35,7 +35,7 @@ const Registered = ({ route }: any) => {
                     Agora só falta criar uma senha para acessar todas as facilidades do aplicativo
                 </Text>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("RegisterUser", { data: data })}
+                    onPress={() => navigation.navigate("RegisterPassword", { data: data })}
                     style={shadowForm}
                     className="flex items-center justify-center bg-solar-orange-middle mt-6 py-4 px-12 rounded-full"
                 >

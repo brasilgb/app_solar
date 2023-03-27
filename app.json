@@ -18,13 +18,22 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyC2r8ewjxAO7eegtgzzoJ4RsrwonUkK9jQ"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyC2r8ewjxAO7eegtgzzoJ4RsrwonUkK9jQ"
+        }
+      },
+      "package": "com.andersonbrodrigues.LojasSolar"
     },
     "web": {
       "favicon": "./assets/favicon.png"

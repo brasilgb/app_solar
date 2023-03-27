@@ -1,13 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
-import { View, Text, Platform, FlatList, TextInput } from "react-native";
+import { View, Text, Platform, FlatList, TextInput, TouchableOpacity } from "react-native";
 import { AppHeader } from "../../../components/Headers";
 import AppLayout from "../../../layouts/AppLayout";
 import { RootStackParamList } from "../../RootStackPrams";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import serviceapp from "../../../services/serviceapp";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { URL_DATA } from "../../../Constants";
 
 interface CitiesProps {
@@ -25,6 +24,8 @@ const CustomerCitiesList = () => {
     async function getLocationLojas() {
       await serviceapp.get(`${URL_DATA}(WS_CARREGA_LOJAS)`)
         .then((response) => {
+          // const CordinateEmpty = response.data.resposta.data.filter((city:any) => (city.latitude !== "" && city.longitude !== ""));
+        
           setMasterData(response.data.resposta.data.map((c: any) => c.cidade).filter((value: any, index: any, self: any) => self.indexOf(value) === index));
           setFilteredData(response.data.resposta.data.map((c: any) => c.cidade).filter((value: any, index: any, self: any) => self.indexOf(value) === index));
         })
@@ -36,9 +37,9 @@ const CustomerCitiesList = () => {
   }, []);
 
   const RenderCities = ({ item, index }: CitiesProps) => (
-    <TouchableOpacity 
-    key={index}
-    onPress={() => navigation.navigate('CustomerLocation', { data: item }) }
+    <TouchableOpacity
+      key={index}
+      onPress={() => navigation.navigate('CustomerLocation', { data: item })}
     >
       <View className="flex-row border-t border-gray-400 py-3.5 px-2.5">
         <View>
@@ -70,7 +71,7 @@ const CustomerCitiesList = () => {
     <AppLayout bgColor="bg-solar-gray-dark">
       <AppHeader
         auxClasses={`bg-solar-gray-dark ${Platform.OS === 'ios' ? '' : 'pt-0'}`}
-        iconLeft={<Text allowFontScaling={false} className="text-sm text-gray-600">Selecione uma opção</Text>}
+        iconLeft={<Text allowFontScaling={false} className="text-sm text-gray-600">Selecione uma opção ok</Text>}
         iconRight={<MaterialCommunityIcons name="close" color={"#F18800"} size={40} onPress={() => navigation.pop()} />}
         logo={false}
       />

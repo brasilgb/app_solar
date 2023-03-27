@@ -6,7 +6,7 @@ import Home from "../screens/Home";
 import { CustomerLocation, StoreSelected, CustomerLocationList, CustomerCitiesList } from "../screens/StoreLocation";
 import { RootStackParamList } from "../screens/RootStackPrams";
 import { SideBar, ContactUs, CommonQuestions, PrivacyPolicy, LoadCities } from "../screens/UserActions";
-import { CheckPassword, NoRegistry, SignIn, RegisterUser, Registered } from "../screens/Auth";
+import { CheckPassword, NoRegistry, SignIn, RegisterUser, Registered, RegisterPassword } from "../screens/Auth";
 
 interface NavigationProps {
     header?: ((props: StackHeaderProps) => React.ReactNode) | undefined;
@@ -44,6 +44,7 @@ const AppRoutes = () => {
             <Stack.Screen name="RegisterUser" component={RegisterUser} options={{ gestureEnabled: false }} />
             <Stack.Screen name="LoadCities" component={LoadCities} options={{ gestureEnabled: false }} />
             <Stack.Screen name="Registered" component={Registered} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="RegisterPassword" component={RegisterPassword} options={{ gestureEnabled: false }} />
         </Stack.Navigator>
     )
 }

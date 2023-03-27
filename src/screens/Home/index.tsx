@@ -140,7 +140,7 @@ const Home = () => {
               iconButtom={<MaterialCommunityIcons name="basket-plus-outline" color={"white"} size={30} />}
             />
             <ButtomsFooter
-              onPress={() => navigation.navigate("NoRegistry", {data: '28064375045'})}
+              onPress={() => navigation.navigate("RegisterPassword", {data: '698590'})}
               textButtom="Pagamentos"
               iconButtom={<MaterialCommunityIcons name="barcode" color={"white"} size={30} />}
             />

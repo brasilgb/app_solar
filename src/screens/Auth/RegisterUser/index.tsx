@@ -16,7 +16,7 @@ import serviceapp from "../../../services/serviceapp";
 import { URL_DATA } from "../../../Constants";
 import { cnpj, cpf } from "cpf-cnpj-validator";
 import AppModal from "../../../components/AppModal";
-import { maskCelular, maskCep, maskDate } from "../../../utils/masks";
+import { maskCelular, maskCep, maskDate, unMask } from "../../../utils/masks";
 import { shadowAll, shadowForm } from "../../../Styles";
 
 interface RegisterUserProps {
@@ -97,13 +97,12 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
             setFilteredData(result.data.resposta.data.map((c: any) => c.cidade).filter((value: any, index: any, self: any) => self.indexOf(value) === index));
             setLoadingModal(false);
         }
-
     }, [selectedUf]);
 
     // envio do formulário
     const onSubmit = (async (values: FormProps) => {
 
-        const response = await serviceapp.get(`${URL_DATA}(WS_PRIMEIRO_ACESSO)?cpfcnpj=${values.cpfcnpj}&nomeCliente=${values.nomeCliente}&enderecoCliente=${values.enderecoCliente}&cepCliente=${values.cepCliente}&cidadeCliente=${values.cidadeCliente}&ufCliente=${values.ufCliente}&celularCliente=${maskCelular}&emailCliente=${values.emailCliente}&nascimentoCliente=${values.nascimentoCliente}`);
+        const response = await serviceapp.get(`${URL_DATA}(WS_PRIMEIRO_ACESSO)?cpfcnpj=${values.cpfcnpj}&nomeCliente=${values.nomeCliente}&enderecoCliente=${values.enderecoCliente}&cepCliente=${unMask(values.cepCliente)}&cidadeCliente=${values.cidadeCliente}&ufCliente=${values.ufCliente}&celularCliente=${values.celularCliente}&emailCliente=${values.emailCliente}&nascimentoCliente=${values.nascimentoCliente}`);
         const { success, message, data } = response.data.resposta;
         if (success) {
             navigation.navigate("Registered", { data: data });
@@ -394,9 +393,6 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
                                             <Text className={`text-lg font-Poppins_500Medium ${!isValid ? "text-gray-300" : "text-solar-blue-dark"}`}>Continuar</Text>
                                         </TouchableOpacity>
                                     </View>
-
-
-
                                 )}
 
                             </Formik>

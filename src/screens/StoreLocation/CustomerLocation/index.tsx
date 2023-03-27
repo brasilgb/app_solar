@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Text, Platform, View, Animated, Dimensions, Modal as ModalMap, Modal as ModalList } from "react-native";
+import { Text, Platform, View, Animated, Dimensions, TouchableOpacity } from "react-native";
 import { AppHeader } from "../../../components/Headers";
 import AppLayout from "../../../layouts/AppLayout";
 import { Ionicons, FontAwesome5, Entypo } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../RootStackPrams";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
 import { shadowAll } from "../../../Styles";
@@ -16,8 +15,9 @@ import { URL_DATA } from "../../../Constants";
 
 const { width, height } = Dimensions.get("window");
 
-export const SLIDER_WIDTH = Dimensions.get('window').width
-export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8)
+export const HEIGHT = Dimensions.get('window').height;
+export const SLIDER_WIDTH = Dimensions.get('window').width;
+export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
 const CARD_WIDTH = width * 0.8;
 interface ListCitiesProps {
   item: any;
@@ -47,16 +47,18 @@ const CustomerLocation = ({ route }: any) => {
   useEffect(() => {
     async function getLocationLojasProxima() {
       let lojas = data ? 'WS_CARREGA_LOJAS' : 'WS_LOJAS_PROXIMA';
-      await serviceapp.get(`${URL_DATA}(${lojas})?latitude=${positionGlobal[0]}&longitude=${positionGlobal[1]}`)
+      let latitudel = parseFloat(positionGlobal[0]);
+      let longitudel = parseFloat(positionGlobal[1]);
+      await serviceapp.get(`${URL_DATA}(${lojas})?latitude=${latitudel}&longitude=${longitudel}`)
         .then((response) => {
           if (data) {
-            let result = response.data.resposta.data.filter((l: any) => (l.cidade === data))
+            let result = response.data.resposta.data.filter((l: any) => (l.cidade.split("-")[0] === data.split("-")[0] && l.latitude !== "" && l.longitude !== ""))
             setLocationLojasProxima(result);
             const { latitude, longitude } = result[0];
             setTimeout(() => {
               const setregion = {
-                latitude: parseFloat(latitude !== "" ? latitude : 0),
-                longitude: parseFloat(longitude !== "" ? longitude : 0),
+                latitude: parseFloat(latitude),
+                longitude: parseFloat(longitude),
                 latitudeDelta: 0.0043,
                 longitudeDelta: 0.0034
               };
@@ -136,7 +138,7 @@ const CustomerLocation = ({ route }: any) => {
         iconRight={<FontAwesome5 name="list-alt" color={"white"} size={40} onPress={() => navigation.navigate('CustomerLocationList', { data: locationLojasProxima })} />}
         logo={true}
       />
-      <View className="flex-col">
+      <View className="flex-1">
         <View className="flex-col items-center">
           <View className="pt-2">
             <Text allowFontScaling={false} className="font-Poppins_400Regular text-2xl text-solar-blue-dark">Lojas mais próximas</Text>
@@ -148,7 +150,7 @@ const CustomerLocation = ({ route }: any) => {
 
         <View className="flex-row items-center justify-between bg-solar-blue-light w-full">
 
-          <View className="flex-none pl-3">
+          <View className="pl-3">
             <Entypo name="location-pin" color={"white"} size={24} />
           </View>
           <View className="flex-grow items-start justify-between py-1 pl-3 h-14">
@@ -156,7 +158,7 @@ const CustomerLocation = ({ route }: any) => {
             <Text allowFontScaling={false} className="font-Poppins_400Regular text-base text-white">{data ? data.split(" - ")[0] : ''}</Text>
           </View>
 
-          <View className="flex-none pr-4">
+          <View className="pr-4">
             <TouchableOpacity
               className="rounded-3xl py-2 px-4 bg-yellow-500"
               style={shadowAll}
@@ -165,44 +167,45 @@ const CustomerLocation = ({ route }: any) => {
               <Text allowFontScaling={false} className="font-Poppins_500Medium text-sm text-solar-blue-dark">Alterar</Text>
             </TouchableOpacity>
           </View>
-
         </View>
 
-        <MapView
-          ref={mapRef}
-          provider={PROVIDER_GOOGLE}
-          className="flex-1"
-          initialRegion={region}
-          showsUserLocation
-          loadingEnabled
-        >
-          {locationLojasProxima.map((marker: any, index: any) => {
-            const scaleStyle = {
-              transform: [
-                {
-                  scale: interpolations[index].scale,
-                },
-              ],
-            };
-            return (
-              <Marker key={index}
-                coordinate={{
-                  latitude: parseFloat(marker.latitude),
-                  longitude: parseFloat(marker.longitude),
-                }}
-              >
-                <Animated.View className="items-center justify-center w-14 h-14">
-                  <Animated.Image
-                    source={require('../../../../assets/map_marker.png')}
-                    style={[scaleStyle]}
-                    className="w-5 h-5"
-                    resizeMode="cover"
-                  />
-                </Animated.View>
-              </Marker>
-            )
-          })}
-        </MapView>
+        <View className="flex-1">
+          <MapView
+            ref={mapRef}
+            provider={PROVIDER_GOOGLE}
+            className="flex-1"
+            initialRegion={region}
+            showsUserLocation
+            loadingEnabled
+          >
+            {locationLojasProxima.map((marker: any, index: any) => {
+              const scaleStyle = {
+                transform: [
+                  {
+                    scale: interpolations[index].scale,
+                  },
+                ],
+              };
+              return (
+                <Marker key={index}
+                  coordinate={{
+                    latitude: parseFloat(marker.latitude),
+                    longitude: parseFloat(marker.longitude),
+                  }}
+                >
+                  <Animated.View className="items-center justify-center w-14 h-14">
+                    <Animated.Image
+                      source={require('../../../../assets/map_marker.png')}
+                      style={[scaleStyle]}
+                      className="w-5 h-5"
+                      resizeMode="cover"
+                    />
+                  </Animated.View>
+                </Marker>
+              )
+            })}
+          </MapView>
+        </View>
 
         <View className="absolute bottom-16">
           <Carousel

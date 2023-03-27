@@ -1,12 +1,11 @@
 import React from "react";
-import { View, Text, Platform } from "react-native";
+import { View, Text, Platform, FlatList, TouchableOpacity } from "react-native";
 import AppLayout from "../../../layouts/AppLayout";
 import { AppHeader } from "../../../components/Headers";
 import { Ionicons, FontAwesome5, Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../RootStackPrams";
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { shadowAll } from "../../../Styles";
 
 interface Props {

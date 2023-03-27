@@ -14,4 +14,5 @@ export type RootStackParamList = {
     RegisterUser: { data: any }
     LoadCities: { data: any }
     Registered: { data: any }
+    RegisterPassword: { data: any }
 }
