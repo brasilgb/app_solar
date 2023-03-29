@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { KeyboardAvoidingView, Platform, ScrollView, View, Text, TouchableOpacity } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { KeyboardAvoidingView, Platform, ScrollView, View, Text, TouchableOpacity, Keyboard, Alert } from "react-native";
 import { AppHeader } from "../../../components/Headers";
 import AppLayout from "../../../layouts/AppLayout";
 import { Ionicons, Feather } from "@expo/vector-icons";
@@ -10,19 +10,41 @@ import FormInput from "../../../components/FormInput";
 import { Formik } from "formik";
 import { shadowForm } from "../../../Styles";
 import schema from "./schema";
+import serviceapp from "../../../services/serviceapp";
+import { URL_DATA } from "../../../Constants";
+import { unMask } from "../../../utils/masks";
 
 interface SenhaProps {
     senha: string;
     repitaSenha: string;
 }
 
-const RegisterPassword = () => {
+const RegisterPassword = ({route}:any) => {
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
     const [showPassword1, setShowPassword1] = useState<boolean>(false);
     const [showPassword2, setShowPassword2] = useState<boolean>(false);
+    const { data } = route?.params
+
+    const passwordReg = useCallback(async (values: SenhaProps) => {
+        console.log(values, data);
+            await serviceapp.get(`${URL_DATA}(WS_ALTERAR_SENHA_APP)?cpfcnpj=${data}&senha=${values.senha}`)
+            .then((response) => {
+                const { success, message, data } = response.data.resposta;
+                if (success) {
+                    navigation.navigate("CheckPassword", { data: data });
+                } else {
+                    Alert.alert('Erro', message);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    },[]);
 
     const onSubmit = (async (values: SenhaProps) => {
-        console.log(values);
+        Keyboard.dismiss();
+        passwordReg(values);
     })
 
     return (
@@ -39,7 +61,7 @@ const RegisterPassword = () => {
                 logo={true}
             />
             <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} keyboardVerticalOffset={-14}>
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
                     <View className="mb-14 px-4">
 
                         <Text allowFontScaling={false} className="text-[28px] text-solar-blue-dark font-Poppins_400Regular py-5 text-center">Este é seu primeiro acesso!</Text>
@@ -63,29 +85,37 @@ const RegisterPassword = () => {
 
                                 <View className="w-full">
 
-                                    <FormInput
-                                        className="mt-6"
-                                        title="Insira sua nova senha"
-                                        onChangeText={handleChange('senha')}
-                                        onBlur={() => setFieldTouched('senha')}
-                                        value={values.senha}
-                                        isValid={isValid}
-                                        editable={true}
-                                        errors={errors.senha}
-                                        touched={touched.senha}
-                                    />
+                                        <FormInput
+                                            className="mt-6"
+                                            title="Insira sua nova senha"
+                                            onChangeText={handleChange('senha')}
+                                            onBlur={() => setFieldTouched('senha')}
+                                            value={values.senha}
+                                            isValid={isValid}
+                                            editable={true}
+                                            errors={errors.senha}
+                                            touched={touched.senha}
+                                            autoCapitalize="none"
+                                            secureTextEntry={showPassword1 ? false : true}
+                                            iconSecurity={showPassword1 ? 'eye-outline' : 'eye-off-outline'}
+                                            actionSecurity={() => setShowPassword1(!showPassword1)}
+                                        />
 
-                                    <FormInput
-                                        className="mt-6"
-                                        title="Confirme sua nova senha"
-                                        onChangeText={handleChange('repitaSenha')}
-                                        onBlur={() => setFieldTouched('repitaSenha')}
-                                        value={values.repitaSenha}
-                                        isValid={isValid}
-                                        editable={true}
-                                        errors={errors.repitaSenha}
-                                        touched={touched.repitaSenha}
-                                    />
+                                        <FormInput
+                                            className="mt-6 relative"
+                                            title="Confirme sua nova senha"
+                                            onChangeText={handleChange('repitaSenha')}
+                                            onBlur={() => setFieldTouched('repitaSenha')}
+                                            value={values.repitaSenha}
+                                            isValid={isValid}
+                                            editable={true}
+                                            errors={errors.repitaSenha}
+                                            touched={touched.repitaSenha}
+                                            autoCapitalize="none"
+                                            secureTextEntry={showPassword2 ? false : true}
+                                            iconSecurity={showPassword2 ? 'eye-outline' : 'eye-off-outline'}
+                                            actionSecurity={() => setShowPassword2(!showPassword2)}
+                                        />
 
                                     <TouchableOpacity
                                         style={shadowForm}

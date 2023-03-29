@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Text, TextInput, View } from "react-native";
 import { shadowForm } from "../../Styles";
+import { Ionicons } from "@expo/vector-icons";
 
 interface FormProps {
     className?: String;
@@ -19,31 +20,39 @@ interface FormProps {
     showSoftInputOnFocus?: any;
     placeholder?: any;
     cursor?: any;
+    secureTextEntry?: any;
+    iconSecurity?: any;
+    actionSecurity?: any;
 }
 
-const FormInput = ({ className, cursor, onChangeText, onBlur, autoCapitalize, keyboarType, maxLength, value, title, isValid, editable, touched, errors, onTouchStart, showSoftInputOnFocus, placeholder }: FormProps) => {
-    
+const FormInput = ({ className, cursor, onChangeText, onBlur, autoCapitalize, keyboarType, maxLength, value, title, isValid, editable, touched, errors, onTouchStart, showSoftInputOnFocus, placeholder, secureTextEntry, iconSecurity, actionSecurity }: FormProps) => {
+
     return (
         <Fragment>
             <View className={`${className}`} >
-                <Text className="text-base pl-8 text-gray-400 font-Poppins_700Bold">{title}</Text>
+                <Text className="text-base relative pl-8 text-gray-400 font-Poppins_700Bold">{title}</Text>
                 <TextInput
                     style={shadowForm}
                     className={`py-4 px-8 rounded-full text-lg font-Poppins_400Regular bg-white border placeholder:text-slate-400 ${touched && errors ? "text-red-600 border-red-600" : "text-solar-blue-dark border-gray-300"}`}
                     onChangeText={onChangeText}
                     onBlur={onBlur}
-                    autoCapitalize="none"
+                    autoCapitalize={autoCapitalize}
                     autoCorrect={false}
                     keyboardType={keyboarType}
                     maxLength={maxLength}
-                    value={value.toUpperCase()}
+                    value={value}
                     editable={editable}
                     showSoftInputOnFocus={showSoftInputOnFocus}
                     placeholder={placeholder}
                     placeholderTextColor="#154295"
                     cursorColor={cursor}
+                    secureTextEntry={secureTextEntry}
                 />
+                <View className="absolute right-3 bottom-4">
+                    <Ionicons name={iconSecurity} color={"#154295"} size={26} onPress={actionSecurity} />
+                </View>
             </View>
+
             {touched && errors &&
                 <Text className="self-end pr-6 pt-1 text-xs text-red-600 font-Poppins_400Regular_Italic">{errors}</Text>
             }

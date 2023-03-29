@@ -54,19 +54,21 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
         setLoading(true);
 
         const response = await serviceapp.get(`${URL_DATA}(WS_LOGIN_APP)?cpfcnpj=${cpfcnpj}`);
-
+        
         if (response.status !== 200) {
             setLoading(false);
             throw new Error("Erro ao conectar ao servidor. O serviço da aplicação parece estar parado.");
         }
 
         const { crediario, message, data } = response.data.resposta;
-
-        if (!crediario) {
+        
+// console.log(data.cadastroCliente +'-----'+ data.cadastroSenha);
+        if (!data.cadastroCliente && !data.cadastroSenha) {
             setLoading(false);
             navigation.navigate('NoRegistry', { data: cpfcnpj });
             return;
         }
+
         setTimeout(() => {
             setLoading(false);
             navigation.navigate('CheckPassword', { data: { cpfCnpj: cpfcnpj, nomeCliente: data.nomeCliente } });

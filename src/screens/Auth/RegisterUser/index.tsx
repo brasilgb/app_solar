@@ -105,7 +105,7 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
         const response = await serviceapp.get(`${URL_DATA}(WS_PRIMEIRO_ACESSO)?cpfcnpj=${values.cpfcnpj}&nomeCliente=${values.nomeCliente}&enderecoCliente=${values.enderecoCliente}&cepCliente=${unMask(values.cepCliente)}&cidadeCliente=${values.cidadeCliente}&ufCliente=${values.ufCliente}&celularCliente=${values.celularCliente}&emailCliente=${values.emailCliente}&nascimentoCliente=${values.nascimentoCliente}`);
         const { success, message, data } = response.data.resposta;
         if (success) {
-            navigation.navigate("Registered", { data: data });
+            navigation.navigate("Registered", { data: unMask(values.cpfcnpj) });
         } else {
             Alert.alert('Erro', message);
         }
@@ -212,7 +212,6 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
                             ))}
                         </ScrollView>
                     }
-
 
                 </View>
             </AppModal>
