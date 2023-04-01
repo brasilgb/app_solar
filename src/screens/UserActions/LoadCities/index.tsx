@@ -8,7 +8,7 @@ import { RootStackParamList } from "../../RootStackPrams";
 import { MaterialCommunityIcons, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import serviceapp from "../../../services/serviceapp";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { URL_DATA } from "../../../Constants";
+import { URL_DATA } from "../../../constants";
 import { AuthContext } from "../../../contexts/auth";
 
 interface CitiesProps {
@@ -100,7 +100,7 @@ const LoadCities = ({ route }: any) => {
           data={filteredData}
           keyExtractor={(item: any, index: number) => (item + index)}
           renderItem={({ item }) => <RenderCities item={item} index={undefined} />}
-          keyboardShouldPersistTaps="handled"
+          keyboardShouldPersistTaps="handled" 
         />
       </View>
     </AppLayout>

@@ -13,7 +13,7 @@ import schema from "./schema";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import FormInput from "../../../components/FormInput";
 import serviceapp from "../../../services/serviceapp";
-import { URL_DATA } from "../../../Constants";
+import { URL_DATA } from "../../../constants";
 import { cnpj, cpf } from "cpf-cnpj-validator";
 import AppModal from "../../../components/AppModal";
 import { maskCelular, maskCep, maskDate, unMask } from "../../../utils/masks";
@@ -40,7 +40,7 @@ const HEIGHT = Dimensions.get('window').height;
 const RegisterUser = ({ route }: RegisterUserProps) => {
 
     const { data } = route.params;
-    const { loading } = useContext(AuthContext);
+    const { setLoading, loading } = useContext(AuthContext);
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
     const [selectedUf, setSelectedUf] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
@@ -101,11 +101,16 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
 
     // envio do formulário
     const onSubmit = (async (values: FormProps) => {
-
+        Keyboard.dismiss();
+        setLoading(true);
         const response = await serviceapp.get(`${URL_DATA}(WS_PRIMEIRO_ACESSO)?cpfcnpj=${values.cpfcnpj}&nomeCliente=${values.nomeCliente}&enderecoCliente=${values.enderecoCliente}&cepCliente=${unMask(values.cepCliente)}&cidadeCliente=${values.cidadeCliente}&ufCliente=${values.ufCliente}&celularCliente=${values.celularCliente}&emailCliente=${values.emailCliente}&nascimentoCliente=${values.nascimentoCliente}`);
-        const { success, message, data } = response.data.resposta;
+        const { success, message } = response.data.resposta;
         if (success) {
-            navigation.navigate("Registered", { data: unMask(values.cpfcnpj) });
+
+            setTimeout(() => {
+                setLoading(false);
+                navigation.navigate("Registered", { data: data });
+            }, 500);
         } else {
             Alert.alert('Erro', message);
         }
@@ -230,7 +235,7 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
                 />
 
                 <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} keyboardVerticalOffset={-14}>
-                    <ScrollView showsVerticalScrollIndicator={false}>
+                    <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
                         <View className="mb-14 px-4">
 
                             <Text allowFontScaling={false} className="text-[28px] text-solar-blue-dark font-Poppins_400Regular py-5 text-center">Faça seu cadastro nas Lojas Solar!</Text>
@@ -244,7 +249,7 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
                             <Formik
                                 validationSchema={schema}
                                 initialValues={{
-                                    cpfcnpj: formatCpfCnpj(data),
+                                    cpfcnpj: formatCpfCnpj(data.cpfCnpj),
                                     nomeCliente: '',
                                     enderecoCliente: '',
                                     cepCliente: '',
@@ -260,7 +265,6 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
                                 {({ handleChange, handleBlur, setValues, setFieldValue, handleSubmit, setFieldTouched, values, touched, errors, isValid }) => (
 
                                     <View className="w-full">
-
 
                                         <FormInput
                                             title="CPF ou CNPJ"
@@ -278,6 +282,7 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
                                             editable={true}
                                             errors={errors.nomeCliente}
                                             touched={touched.nomeCliente}
+                                            autoCapitalize="characters"
                                         />
                                         <FormInput
                                             className="mt-6"
@@ -289,6 +294,7 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
                                             editable={true}
                                             errors={errors.enderecoCliente}
                                             touched={touched.enderecoCliente}
+                                            autoCapitalize="characters"
                                         />
                                         <FormInput
                                             className="mt-6"
@@ -369,7 +375,7 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
                                             errors={errors.emailCliente}
                                             touched={touched.emailCliente}
                                             keyboarType="email-address"
-                                            autoCapitalize="none"
+                                            autoCapitalize="characters"
                                         />
                                         <FormInput
                                             className="mt-6"

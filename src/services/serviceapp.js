@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {URL_DATA} from "../Constants";
+import {URL_DATA} from "../constants";
 
 let BASE_URL = '';
 

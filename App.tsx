@@ -25,6 +25,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 const App = () => {
   const [appIsReady, setAppIsReady] = useState(false);
 
+
   useEffect(() => {
     async function prepare() {
       try {
@@ -58,7 +59,7 @@ const App = () => {
 
   const onLayout = useCallback(async () => {
     if (appIsReady) {
-      await SplashScreen.hideAsync();
+      await setTimeout(SplashScreen.hideAsync, 200);
     }
 
   }, [appIsReady]);

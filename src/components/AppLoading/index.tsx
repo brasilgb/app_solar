@@ -13,7 +13,7 @@ export default function AppLoading({ color }: Props) {
             <ActivityIndicator
                 size="large"
                 color={color}
-                className="bg-solar-blue-dark p-4 rounded-lg opacity-90"
+                className="bg-solar-blue-dark p-2 rounded-lg opacity-90 border border-solar-gray-light"
                 style={shadowAll}
             />
         </View>

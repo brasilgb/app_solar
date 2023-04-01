@@ -13,6 +13,7 @@ import schema from "./schema";
 import { cnpj, cpf } from 'cpf-cnpj-validator';
 import { AuthContext } from "../../../contexts/auth";
 import AppLoading from "../../../components/AppLoading";
+import FormInput from "../../../components/FormInput";
 
 interface ValuesForm {
     cpfcnpj: string;
@@ -63,33 +64,37 @@ const SignIn = () => {
                         enableReinitialize={true}
                         onSubmit={(values: ValuesForm) => {
                             Keyboard.dismiss();
-                            signIn({ cpfcnpj: values.cpfcnpj });
+                            setLoading(true);
+
+                            setTimeout(() => {
+                                signIn({ cpfcnpj: values.cpfcnpj });
+                                setLoading(false);
+                            }, 500)
                         }}
                     >
                         {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
-                            <View className="flex items-center justify-start pt-4 w-full px-4">
-                                <Text className="w-full  pl-8 text-gray-500 font-Poppins_500Medium">CPF ou CNPJ</Text>
-                                <TextInput
-                                    style={shadowForm}
-                                    className={`w-full py-4 px-8 rounded-full text-lg font-Poppins_400Regular bg-white border ${!isValid ? "text-red-600 border-red-600" : "text-solar-blue-dark border-gray-300"}`}
-                                    onChangeText={handleChange('cpfcnpj')}
-                                    onBlur={() => setFieldTouched('cpfcnpj')}
-                                    autoCorrect={false}
-                                    keyboardType='numeric'
-                                    maxLength={18}
-                                    value={formatCpfCnpj(values.cpfcnpj)}
-                                />
-                                {touched.cpfcnpj && errors.cpfcnpj &&
-                                    <Text className="self-end pr-6 pt-1 text-xs text-red-600 font-Poppins_400Regular_Italic">{errors.cpfcnpj}</Text>
-                                }
+                            <View className="pt-4 w-full px-4">
+                                <FormInput
+                                        className="mt-6"
+                                        title="CPF ou CNPJ"
+                                        onChangeText={handleChange('cpfcnpj')}
+                                        onBlur={() => setFieldTouched('cpfcnpj')}
+                                        value={formatCpfCnpj(values.cpfcnpj)}
+                                        isValid={isValid}
+                                        editable={true}
+                                        errors={errors.cpfcnpj}
+                                        touched={touched.cpfcnpj}
+                                        autoCapitalize="none"
+                                        keyboarType="numeric"
+                                    />
                                 <TouchableOpacity
-                                    disabled={!isValid}
-                                    onPress={handleSubmit as any}
-                                    style={shadowForm}
-                                    className={`flex items-center justify-center ${!isValid ? "bg-solar-gray-dark" : "bg-solar-orange-middle"} mt-5 py-4 px-24 rounded-full`}
-                                >
-                                    <Text className={`text-lg font-Poppins_500Medium ${!isValid ? "text-gray-300" : "text-solar-blue-dark"}`}>Continuar</Text>
-                                </TouchableOpacity>
+                                        disabled={!isValid}
+                                        style={shadowForm}
+                                        className={`flex items-center justify-center ${!isValid ? "bg-solar-gray-dark" : "bg-solar-orange-middle"} m-5 py-4 px-24 rounded-full`}
+                                        onPress={handleSubmit as any}
+                                    >
+                                        <Text className={`text-lg font-Poppins_500Medium ${!isValid ? "text-gray-300" : "text-solar-blue-dark"}`}>Continuar</Text>
+                                    </TouchableOpacity>
                             </View>
                         )}
                     </Formik>

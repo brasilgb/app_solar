@@ -1,5 +1,6 @@
 export type RootStackParamList = {
     Home: undefined;
+    Disconnect: undefined;
     SideBar: undefined;
     CustomerLocation:  { data: any };
     StoreSelected: { data: any };
@@ -15,4 +16,8 @@ export type RootStackParamList = {
     LoadCities: { data: any }
     Registered: { data: any }
     RegisterPassword: { data: any }
+    RegisteredStore: { data: any }
+    RegisterPasswordStore: { data:any }
+    PasswordChanged: { data:any }
+    PasswordAltered: { data:any }
 }

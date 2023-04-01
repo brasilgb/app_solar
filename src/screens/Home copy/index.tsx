@@ -14,6 +14,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../RootStackPrams";
 import { AuthContext } from "../../contexts/auth";
 import { URL_DATA } from "../../constants"
+import { StatusBar } from "expo-status-bar";
 import AppLoading from "../../components/AppLoading";
 export const SLIDER_WIDTH = Dimensions.get('window').width
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 1)
@@ -22,22 +23,27 @@ interface Props {
   index: any;
 }
 const Home = () => {
+  const { user, setLoading, loading, disconnect } = useContext(AuthContext);
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const { setLoading, loading } = useContext(AuthContext);
+// console.log(user);
   const isCarousel = useRef(null);
   const [index, setIndex] = useState(0);
   const [carrocelData, setCarrocelData] = useState<any>([]);
-
+console.log(user)
   useEffect(() => {
     setLoading(true);
     async function getLocationLojas() {
       await serviceapp.get(`${URL_DATA}(WS_CARROCEL_PROMOCAO)`)
         .then((response) => {
+          if(user && !user?.connected){
+            disconnect();
+            navigation.navigate('Home');
+          };
           setTimeout(() => {
-            setCarrocelData(response.data.resposta.data.carrocel);
-            setLoading(false);
-          }, 500)
+          setCarrocelData(response.data.resposta.data.carrocel);
+          setLoading(false);
+          }, 500);
         })
         .catch((err) => {
           console.log(err);
@@ -55,6 +61,7 @@ const Home = () => {
   };
 
   const CarouselCardItem = ({ item, index }: Props) => {
+
     return (
       <View key={index} style={[styles.container, { backgroundColor: '#ebebeb' }]}>
         <View style={{ borderTopWidth: 1, borderTopColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#FFF' }}>
@@ -73,10 +80,20 @@ const Home = () => {
     )
   }
 
+  const EntryConnected = () => {
+    return <View className="absolute top-0 left-0 right-0 bottom-0 z-10 items-center justify-center">
+      <StatusBar translucent style="light" />
+      <Text>texto</Text>
+    </View>
+  }
+
   return (
     <Fragment>
-      {loading && <AppLoading color="#FFFFFF" />}
-      <AppLayout bgColor="bg-gray-200" statusBarBG="#00AEEF" statusBarStyle="light" >
+      {loading &&
+        <AppLoading color={"#FFF"} />
+      }
+      <AppLayout bgColor="bg-solar-blue-light" statusBarBG="#00AEEF" statusBarStyle="light" >
+
         <AppHeader
           auxClasses={`bg-solar-blue-light ${Platform.OS === 'ios' ? '' : 'pt-3'}`}
           iconLeft={<Ionicons name="ios-menu" color={"white"} size={40} onPress={() => navigation.navigate('SideBar')} />}
@@ -84,7 +101,7 @@ const Home = () => {
           logo={true}
         />
 
-        <View className="flex-1 w-full bg-gray-200">
+        <View className="flex-1 w-full bg-solar-gray-dark">
           <Text allowFontScaling={false} className="bg-solar-blue-light text-sm font-Poppins_500Medium text-white text-center py-3">Olá, seja bem vindo!</Text>
           <View style={{ flex: 1, padding: 0, margin: 0 }}>
             <Carousel
@@ -105,6 +122,7 @@ const Home = () => {
               inactiveSlideScale={1}
             />
           </View>
+
           <View>
             <Pagination
               dotsLength={carrocelData?.length}
@@ -131,7 +149,6 @@ const Home = () => {
                 margin: 0,
                 backgroundColor: '#FAFAFA'
               }}
-
             />
           </View>
         </View>
@@ -145,7 +162,7 @@ const Home = () => {
                 iconButtom={<MaterialCommunityIcons name="basket-plus-outline" color={"white"} size={30} />}
               />
               <ButtomsFooter
-                onPress={() => navigation.navigate("PasswordChanged", { data: 'andersonbrasil72@gmail.com' })}
+                onPress={() => navigation.navigate("PasswordAltered", { data: 'andersonbrasil72@gmail.com' })}
                 textButtom="Pagamentos"
                 iconButtom={<MaterialCommunityIcons name="barcode" color={"white"} size={30} />}
               />

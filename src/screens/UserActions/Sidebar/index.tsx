@@ -18,8 +18,8 @@ interface ItemsSideBarProps {
 }
 
 const SideBar = () => {
-    const { signed } = useContext(AuthContext);
-    
+    const { signed, signOut, user } = useContext(AuthContext);
+
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
     const ListSideBar = [
@@ -97,7 +97,7 @@ const SideBar = () => {
             iconLeft: <MaterialIcons name="logout" color={"#154295"} size={22} />,
             textList: 'Logout',
             iconRight: '',
-            onPress: '',
+            onPress: () => signOut(),
             active: true,
         }
     ]
@@ -119,8 +119,18 @@ const SideBar = () => {
                             <Ionicons name="ios-person-circle-outline" color={"#154295"} size={80} />
                         </View>
                         <View className="flex-auto pl-2">
-                            <Text allowFontScaling={false} className="font-Poppins_400Regular text-2xl text-solar-blue-dark ">Bem Vindo(a)</Text>
-                            <Text allowFontScaling={false} className="font-Poppins_500Medium text-sm text-solar-blue-dark">Faça o login e aproveite o melhor do aplicativo</Text>
+                            <Text allowFontScaling={false} className={`font-Poppins_400Regular ${signed ? 'text-lg' : 'text-xl' } text-solar-blue-dark`}>
+
+                                {signed
+                                    ? `Olá, ${user.nomeCliente}`
+                                    : 'Bem Vindo(a) '}
+                            </Text>
+                            <Text allowFontScaling={false} className="font-Poppins_500Medium text-base text-solar-blue-dark">
+                                {signed
+                                    ? 'Como podemos lhe ajudar hoje?'
+                                    : 'Faça o login e aproveite o melhor do aplicativo'
+                                }
+                            </Text>
                         </View>
                     </View>
                     <View className="flex-col justify-start border-t border-gray-400 mx-2">

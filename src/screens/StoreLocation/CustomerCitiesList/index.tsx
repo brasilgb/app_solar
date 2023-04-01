@@ -7,7 +7,7 @@ import AppLayout from "../../../layouts/AppLayout";
 import { RootStackParamList } from "../../RootStackPrams";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import serviceapp from "../../../services/serviceapp";
-import { URL_DATA } from "../../../Constants";
+import { URL_DATA } from "../../../constants";
 
 interface CitiesProps {
   item: any;

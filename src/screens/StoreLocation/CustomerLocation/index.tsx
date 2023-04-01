@@ -11,7 +11,7 @@ import Carousel from 'react-native-snap-carousel';
 import { shadowAll } from "../../../Styles";
 import { AuthContext } from "../../../contexts/auth";
 import serviceapp from "../../../services/serviceapp";
-import { URL_DATA } from "../../../Constants";
+import { URL_DATA } from "../../../constants";
 
 const { width, height } = Dimensions.get("window");
 

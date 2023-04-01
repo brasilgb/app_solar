@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useContext, useEffect, useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View, Text, TouchableOpacity, Keyboard, Alert } from "react-native";
 import { AppHeader } from "../../../components/Headers";
 import AppLayout from "../../../layouts/AppLayout";
@@ -12,23 +12,27 @@ import { shadowForm } from "../../../Styles";
 import schema from "./schema";
 import serviceapp from "../../../services/serviceapp";
 import { URL_DATA } from "../../../constants";
-import { unMask } from "../../../utils/masks";
+import { maskCelular, unMask } from "../../../utils/masks";
+import { AuthContext } from "../../../contexts/auth";
+import AppLoading from "../../../components/AppLoading";
 
 interface SenhaProps {
+    emailCliente: string;
+    celularCliente: string;
     senha: string;
     repitaSenha: string;
 }
 
-const RegisterPassword = ({ route }: any) => {
+const RegisterPasswordStore = ({ route }: any) => {
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-
+    const { setLoading, loading } = useContext(AuthContext);
     const [showPassword1, setShowPassword1] = useState<boolean>(false);
     const [showPassword2, setShowPassword2] = useState<boolean>(false);
     const { data } = route?.params
 
     const passwordReg = useCallback(async (values: SenhaProps) => {
 
-        await serviceapp.get(`${URL_DATA}(WS_ALTERAR_SENHA_APP)?cpfcnpj=${data.cpfCnpj}&senha=${values.senha}`)
+        await serviceapp.get(`${URL_DATA}(WS_ALTERAR_SENHA_APP)?cpfcnpj=${data.cpfCnpj}&senha=${values.senha}&celularCliente=${values.celularCliente}&emailCliente=${values.emailCliente}`)
             .then((response) => {
                 const { success, message } = response.data.resposta;
                 if (success) {
@@ -44,11 +48,19 @@ const RegisterPassword = ({ route }: any) => {
 
     const onSubmit = (async (values: SenhaProps) => {
         Keyboard.dismiss();
-        passwordReg(values);
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+            passwordReg(values);
+        }, 500);
     });
 
     return (
-        <AppLayout
+        <Fragment>
+            {loading &&
+                <AppLoading color={"#FFFFFF"} />
+            }
+            <AppLayout
             bgColor="bg-solar-gray-light"
             statusBarBG="#FAFAFA"
             statusBarStyle="dark"
@@ -75,6 +87,8 @@ const RegisterPassword = ({ route }: any) => {
                         <Formik
                             validationSchema={schema}
                             initialValues={{
+                                emailCliente: '',
+                                celularCliente: '',
                                 senha: '',
                                 repitaSenha: ''
                             }}
@@ -84,6 +98,34 @@ const RegisterPassword = ({ route }: any) => {
                             {({ handleChange, handleBlur, setValues, setFieldValue, handleSubmit, setFieldTouched, values, touched, errors, isValid }) => (
 
                                 <View className="w-full">
+
+                                    <FormInput
+                                        className="mt-6"
+                                        title="E-mail"
+                                        onChangeText={handleChange('emailCliente')}
+                                        onBlur={() => setFieldTouched('emailCliente')}
+                                        value={values.emailCliente}
+                                        isValid={isValid}
+                                        editable={true}
+                                        errors={errors.emailCliente}
+                                        touched={touched.emailCliente}
+                                        autoCapitalize="characters"
+                                        keyboarType="email-address"
+                                    />
+
+                                    <FormInput
+                                        className="mt-6"
+                                        title="Celular"
+                                        onChangeText={handleChange('celularCliente')}
+                                        onBlur={() => setFieldTouched('celularCliente')}
+                                        value={maskCelular(values.celularCliente)}
+                                        isValid={isValid}
+                                        editable={true}
+                                        errors={errors.celularCliente}
+                                        touched={touched.celularCliente}
+                                        keyboarType="numeric"
+                                        maxLength={11}
+                                    />
 
                                     <FormInput
                                         className="mt-6"
@@ -135,7 +177,8 @@ const RegisterPassword = ({ route }: any) => {
             </KeyboardAvoidingView>
 
         </AppLayout>
+        </Fragment>
     )
 }
 
-export default RegisterPassword;
+export default RegisterPasswordStore;

@@ -6,7 +6,8 @@ import Home from "../screens/Home";
 import { CustomerLocation, StoreSelected, CustomerLocationList, CustomerCitiesList } from "../screens/StoreLocation";
 import { RootStackParamList } from "../screens/RootStackPrams";
 import { SideBar, ContactUs, CommonQuestions, PrivacyPolicy, LoadCities } from "../screens/UserActions";
-import { CheckPassword, NoRegistry, SignIn, RegisterUser, Registered, RegisterPassword } from "../screens/Auth";
+import { CheckPassword, NoRegistry, SignIn, RegisterUser, Registered, RegisterPassword, RegisteredStore, RegisterPasswordStore, PasswordChanged, PasswordAltered } from "../screens/Auth";
+import Disconnect from "../screens/Disconnect";
 
 interface NavigationProps {
     header?: ((props: StackHeaderProps) => React.ReactNode) | undefined;
@@ -15,7 +16,7 @@ const AppRoutes = () => {
 
     return (
         <Stack.Navigator
-            initialRouteName="Home"
+            initialRouteName="Disconnect"
             screenOptions={{
                 headerShown: false,
                 gestureEnabled: true,
@@ -29,7 +30,8 @@ const AppRoutes = () => {
                 },
                 headerStyleInterpolator: HeaderStyleInterpolators.forFade,
             }}>
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Home" component={Home} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="Disconnect" component={Disconnect} options={{ gestureEnabled: false }} />
             <Stack.Screen name="SideBar" component={SideBar} options={{ gestureEnabled: false }} />
             <Stack.Screen name="CustomerLocation" component={CustomerLocation} options={{ gestureEnabled: false, headerMode: "screen" }} />
             <Stack.Screen name="StoreSelected" component={StoreSelected} options={{ gestureEnabled: false, headerMode: "screen" }} />
@@ -45,6 +47,10 @@ const AppRoutes = () => {
             <Stack.Screen name="LoadCities" component={LoadCities} options={{ gestureEnabled: false }} />
             <Stack.Screen name="Registered" component={Registered} options={{ gestureEnabled: false }} />
             <Stack.Screen name="RegisterPassword" component={RegisterPassword} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="RegisteredStore" component={RegisteredStore} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="RegisterPasswordStore" component={RegisterPasswordStore} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="PasswordChanged" component={PasswordChanged} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="PasswordAltered" component={PasswordAltered} options={{ gestureEnabled: false }} />
         </Stack.Navigator>
     )
 }

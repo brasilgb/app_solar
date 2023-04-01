@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../screens/RootStackPrams";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { URL_DATA } from "../Constants";
+import { URL_DATA } from "../constants";
 export const AuthContext = createContext({} as any);
 
 
@@ -51,29 +51,23 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
     }, []);
 
     const signIn = useCallback(async ({ cpfcnpj }: any) => {
-        setLoading(true);
-
         const response = await serviceapp.get(`${URL_DATA}(WS_LOGIN_APP)?cpfcnpj=${cpfcnpj}`);
-        
         if (response.status !== 200) {
-            setLoading(false);
             throw new Error("Erro ao conectar ao servidor. O serviço da aplicação parece estar parado.");
         }
-
         const { crediario, message, data } = response.data.resposta;
-        
-// console.log(data.cadastroCliente +'-----'+ data.cadastroSenha);
         if (!data.cadastroCliente && !data.cadastroSenha) {
-            setLoading(false);
-            navigation.navigate('NoRegistry', { data: cpfcnpj });
+            navigation.navigate('NoRegistry', { data: { cpfCnpj: cpfcnpj, nomeCliente: data.nomeCliente } });
             return;
         }
-
-        setTimeout(() => {
-            setLoading(false);
+        if (data.cadastroCliente && !data.cadastroSenha) {
+            navigation.navigate('RegisteredStore', { data: { cpfCnpj: cpfcnpj, nomeCliente: data.nomeCliente } });
+            return;
+        }
+        if (data.cadastroCliente && data.cadastroSenha) {
             navigation.navigate('CheckPassword', { data: { cpfCnpj: cpfcnpj, nomeCliente: data.nomeCliente } });
-        }, 1000)
-
+            return;
+        }
     }, [])
 
     const checkPasswordApp = useCallback(async ({ cpfcnpj, senha, nomeCliente, connected }: any) => {
@@ -90,6 +84,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
             setUser(undefined);
             setLoading(false);
             Alert.alert('Erro', `${message}`);
+            return;
         }
 
         let userData = {
@@ -106,9 +101,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
 
     async function signOut() {
         Alert.alert(
-            //title
             'Atenção - Ação de Logout',
-            //body
             'Você será desconectado, deseja continuar?',
             [
                 { text: 'Sim', onPress: () => disconnect() },
@@ -132,6 +125,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
     return (
         <AuthContext.Provider value={{
             signed: !!user,
+            user,
             setLoading,
             loading,
             positionGlobal,
