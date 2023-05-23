@@ -32,7 +32,7 @@ const RegisterPasswordStore = ({ route }: any) => {
 
     const passwordReg = useCallback(async (values: SenhaProps) => {
 
-        await serviceapp.get(`${URL_DATA}(WS_ALTERAR_SENHA_APP)?cpfcnpj=${data.cpfCnpj}&senha=${values.senha}&celularCliente=${values.celularCliente}&emailCliente=${values.emailCliente}`)
+        await serviceapp.get(`(WS_ALTERAR_SENHA_APP)?cpfcnpj=${data.cpfCnpj}&senha=${values.senha}&celularCliente=${values.celularCliente}&emailCliente=${values.emailCliente}`)
             .then((response) => {
                 const { success, message } = response.data.resposta;
                 if (success) {

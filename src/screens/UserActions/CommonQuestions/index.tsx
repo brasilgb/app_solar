@@ -42,7 +42,7 @@ const CommonQuestions = ({ route }: any) => {
 
     useEffect(() => {
         async function getCarregaFaq() {
-            await serviceapp.get(`${URL_DATA}(WS_CARREGA_FAQ)`)
+            await serviceapp.get(`(WS_CARREGA_FAQ)`)
                 .then((response) => {
                     const result = response.data.resposta.data.categorias.filter((z: any) => (z.Categoria.xCategoria.trim() === currentCategory));
                     const resp = result.map((cat: any, index: any) => (cat.Categoria));
@@ -155,7 +155,6 @@ const CommonQuestions = ({ route }: any) => {
                                                 : <MaterialIcons name={'keyboard-arrow-up'} size={30} color="#FAA335" />
                                             }
                                         </View>
-
                                     </View>
 
                                 </TouchableOpacity>

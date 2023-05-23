@@ -62,7 +62,7 @@ const CheckPassword = ({ route }: any) => {
 
     const resetPassword = useCallback(async (cpfCnpj: any) => {
         setLoading(true);
-        const response = await serviceapp.get(`${URL_DATA}(WS_RECUPERA_SENHA)?cpfcnpj=${cpfCnpj}`);
+        const response = await serviceapp.get(`(WS_RECUPERA_SENHA)?cpfcnpj=${cpfCnpj}`);
         const { success, message, data } = response.data.resposta;
         if (!success) {
             Alert.alert('Atenção', message);

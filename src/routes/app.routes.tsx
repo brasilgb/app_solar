@@ -5,13 +5,12 @@ const Stack = createStackNavigator<RootStackParamList>();
 import Home from "../screens/Home";
 import { CustomerLocation, StoreSelected, CustomerLocationList, CustomerCitiesList } from "../screens/StoreLocation";
 import { RootStackParamList } from "../screens/RootStackPrams";
-import { SideBar, ContactUs, CommonQuestions, PrivacyPolicy, LoadCities } from "../screens/UserActions";
-import { CheckPassword, NoRegistry, SignIn, RegisterUser, Registered, RegisterPassword, RegisteredStore, RegisterPasswordStore, PasswordChanged, PasswordAltered } from "../screens/Auth";
+import { SideBar, ContactUs, CommonQuestions, PrivacyPolicy, LoadCities, PrivacySettings } from "../screens/UserActions";
+import { CheckPassword, NoRegistry, SignIn, RegisterUser, Registered, RegisterPassword, RegisteredStore, RegisterPasswordStore, PasswordChanged, PasswordAltered, AlterPassword } from "../screens/Auth";
 import Disconnect from "../screens/Disconnect";
+import MyAccount from "../screens/Auth/MyAccount";
+import { Crediary, ImagesSent, LoadImages } from "../screens/Crediary";
 
-interface NavigationProps {
-    header?: ((props: StackHeaderProps) => React.ReactNode) | undefined;
-}
 const AppRoutes = () => {
 
     return (
@@ -51,6 +50,12 @@ const AppRoutes = () => {
             <Stack.Screen name="RegisterPasswordStore" component={RegisterPasswordStore} options={{ gestureEnabled: false }} />
             <Stack.Screen name="PasswordChanged" component={PasswordChanged} options={{ gestureEnabled: false }} />
             <Stack.Screen name="PasswordAltered" component={PasswordAltered} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="AlterPassword" component={AlterPassword} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="MyAccount" component={MyAccount} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="Crediary" component={Crediary} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="LoadImages" component={LoadImages} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="ImagesSent" component={ImagesSent} options={{ gestureEnabled: false }} />
+            <Stack.Screen name="PrivacySettings" component={PrivacySettings} options={{ gestureEnabled: false }} />
         </Stack.Navigator>
     )
 }

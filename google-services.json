@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "455668396166",
+    "project_id": "lojassolarapp",
+    "storage_bucket": "lojassolarapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:455668396166:android:db2ccc362bd6883ded2107",
+        "android_client_info": {
+          "package_name": "br.com.lojasolarapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "455668396166-4olim87p9lq28buatbc3ibi5ad1pa442.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWAT25DASu9lBjg2Adwl1NRe70P6hX-AM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "455668396166-4olim87p9lq28buatbc3ibi5ad1pa442.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "455668396166-abp8gbamaq55updkq0pdp035n7jbnp4o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.solar.loja"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

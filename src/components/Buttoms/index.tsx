@@ -4,4 +4,4 @@ import ButtomsQuestions from "./ButtomsQuestions";
 export {
     ButtomsFooter,
     ButtomsQuestions
-}
+} 

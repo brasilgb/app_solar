@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { View, Text, Platform, KeyboardAvoidingView, Dimensions, TouchableOpacity, Keyboard, Pressable, Alert, ActivityIndicator } from "react-native";
 import AppLoading from "../../../components/AppLoading";
 import { AppHeader } from "../../../components/Headers";
@@ -40,8 +40,8 @@ const HEIGHT = Dimensions.get('window').height;
 const RegisterUser = ({ route }: RegisterUserProps) => {
 
     const { data } = route.params;
-    const { setLoading, loading } = useContext(AuthContext);
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+    const { setLoading, loading } = useContext(AuthContext);
     const [selectedUf, setSelectedUf] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
     const [ufLoad, setUfLoad] = useState([]);
@@ -83,7 +83,7 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
     }
 
     const getStateStore = useCallback(async () => {
-        const result = await serviceapp.get(`${URL_DATA}(WS_CARREGA_UF)`)
+        const result = await serviceapp.get(`(WS_CARREGA_UF)`)
         if (result) {
             setUfLoad(result.data.resposta.data);
         }
@@ -91,7 +91,7 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
 
     const getCitiesStore = useCallback(async () => {
         setLoadingModal(true);
-        const result = await serviceapp.get(`${URL_DATA}(WS_CARREGA_CIDADE)?uf=${selectedUf}`);
+        const result = await serviceapp.get(`(WS_CARREGA_CIDADE)?uf=${selectedUf}`);
         if (result) {
             setCityLoad(result.data.resposta.data.map((c: any) => c.cidade).filter((value: any, index: any, self: any) => self.indexOf(value) === index));
             setFilteredData(result.data.resposta.data.map((c: any) => c.cidade).filter((value: any, index: any, self: any) => self.indexOf(value) === index));
@@ -103,7 +103,7 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
     const onSubmit = (async (values: FormProps) => {
         Keyboard.dismiss();
         setLoading(true);
-        const response = await serviceapp.get(`${URL_DATA}(WS_PRIMEIRO_ACESSO)?cpfcnpj=${values.cpfcnpj}&nomeCliente=${values.nomeCliente}&enderecoCliente=${values.enderecoCliente}&cepCliente=${unMask(values.cepCliente)}&cidadeCliente=${values.cidadeCliente}&ufCliente=${values.ufCliente}&celularCliente=${values.celularCliente}&emailCliente=${values.emailCliente}&nascimentoCliente=${values.nascimentoCliente}`);
+        const response = await serviceapp.get(`(WS_PRIMEIRO_ACESSO)?cpfcnpj=${values.cpfcnpj}&nomeCliente=${values.nomeCliente}&enderecoCliente=${values.enderecoCliente}&cepCliente=${unMask(values.cepCliente)}&cidadeCliente=${values.cidadeCliente}&ufCliente=${values.ufCliente}&celularCliente=${values.celularCliente}&emailCliente=${values.emailCliente}&nascimentoCliente=${values.nascimentoCliente}`);
         const { success, message } = response.data.resposta;
         if (success) {
 
@@ -145,7 +145,7 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
     };
 
     return (
-        <Fragment>
+        <>
 
             {loading &&
                 <AppLoading color={"#FFFFFF"} />
@@ -407,7 +407,7 @@ const RegisterUser = ({ route }: RegisterUserProps) => {
                 </KeyboardAvoidingView>
 
             </AppLayout>
-        </Fragment>
+        </>
     )
 }
 

@@ -8,6 +8,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../RootStackPrams";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AuthContext } from "../../../contexts/auth";
+import { AlterPassword } from "../../Auth";
 
 interface ItemsSideBarProps {
     iconLeft: any;
@@ -21,7 +22,7 @@ const SideBar = () => {
     const { signed, signOut, user } = useContext(AuthContext);
 
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-
+    // console.log(user.cpfCnpj);
     const ListSideBar = [
         {
             iconLeft: <Ionicons name="md-person" color={"#154295"} size={22} />,
@@ -34,28 +35,28 @@ const SideBar = () => {
             iconLeft: <Ionicons name="md-person" color={"#154295"} size={22} />,
             textList: 'Minha conta',
             iconRight: <MaterialIcons name="arrow-forward-ios" color={"#FAA335"} size={22} />,
-            onPress: '',
+            onPress: () => navigation.navigate('MyAccount', { user: user }),
             active: true,
         },
         {
             iconLeft: <Fontisto name="wallet" color={"#154295"} size={22} />,
             textList: 'Crediário',
             iconRight: <MaterialIcons name="arrow-forward-ios" color={"#FAA335"} size={22} />,
-            onPress: '',
+            onPress: () => navigation.navigate('Crediary', { user: user }),
             active: true,
         },
         {
             iconLeft: <Fontisto name="locked" color={"#154295"} size={22} />,
             textList: 'Alterar senha',
             iconRight: <MaterialIcons name="arrow-forward-ios" color={"#FAA335"} size={22} />,
-            onPress: '',
+            onPress: () => navigation.navigate('AlterPassword', { user: user }),
             active: true,
         },
         {
             iconLeft: <Fontisto name="locked" color={"#154295"} size={22} />,
             textList: 'Configurações de privacidade',
             iconRight: <MaterialIcons name="arrow-forward-ios" color={"#FAA335"} size={22} />,
-            onPress: '',
+            onPress: () => navigation.navigate('PrivacySettings', { user: user }),
             active: true,
         },
         {
@@ -119,7 +120,7 @@ const SideBar = () => {
                             <Ionicons name="ios-person-circle-outline" color={"#154295"} size={80} />
                         </View>
                         <View className="flex-auto pl-2">
-                            <Text allowFontScaling={false} className={`font-Poppins_400Regular ${signed ? 'text-lg' : 'text-xl' } text-solar-blue-dark`}>
+                            <Text allowFontScaling={false} className={`font-Poppins_400Regular ${signed ? 'text-lg' : 'text-xl'} text-solar-blue-dark`}>
 
                                 {signed
                                     ? `Olá, ${user.nomeCliente}`

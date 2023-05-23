@@ -28,7 +28,7 @@ const RegisterPassword = ({ route }: any) => {
 
     const passwordReg = useCallback(async (values: SenhaProps) => {
 
-        await serviceapp.get(`${URL_DATA}(WS_ALTERAR_SENHA_APP)?cpfcnpj=${data.cpfCnpj}&senha=${values.senha}`)
+        await serviceapp.get(`(WS_ALTERAR_SENHA_APP)?cpfcnpj=${data.cpfCnpj}&senha=${values.senha}`)
             .then((response) => {
                 const { success, message } = response.data.resposta;
                 if (success) {

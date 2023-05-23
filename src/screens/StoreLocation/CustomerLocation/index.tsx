@@ -49,7 +49,7 @@ const CustomerLocation = ({ route }: any) => {
       let lojas = data ? 'WS_CARREGA_LOJAS' : 'WS_LOJAS_PROXIMA';
       let latitudel = parseFloat(positionGlobal[0]);
       let longitudel = parseFloat(positionGlobal[1]);
-      await serviceapp.get(`${URL_DATA}(${lojas})?latitude=${latitudel}&longitude=${longitudel}`)
+      await serviceapp.get(`(${lojas})?latitude=${latitudel}&longitude=${longitudel}`)
         .then((response) => {
           if (data) {
             let result = response.data.resposta.data.filter((l: any) => (l.cidade.split("-")[0] === data.split("-")[0] && l.latitude !== "" && l.longitude !== ""))

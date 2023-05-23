@@ -33,7 +33,7 @@ const SignIn = () => {
     })
 
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-
+ 
     return (
         <Fragment>
             {loading &&
@@ -44,14 +44,12 @@ const SignIn = () => {
                 statusBarBG="#F1F1F1"
                 statusBarStyle="dark"
             >
-
                 <AppHeader
                     auxClasses={`bg-solar-gray-dark ${Platform.OS === 'ios' ? '' : 'pt-3'}`}
                     iconLeft={<Ionicons name="ios-chevron-back-sharp" color={"#FAA335"} size={36} onPress={() => navigation.goBack()} />}
                     //iconRight={<Ionicons name="close" color={"#FAA335"} size={36} onPress={() => navigation.pop()} />}
                     logo={true}
                 />
-
                 <KeyboardAvoidingView className="flex-1 items-center justify-start w-full">
                     <Text className="text-2xl font-Poppins_400Regular text-solar-blue-dark my-7">Antes de continuarmos...</Text>
                     <Text className="text-base font-Poppins_400Regular text-solar-blue-dark">Informe seu CPF ou CNPJ</Text>
@@ -86,6 +84,7 @@ const SignIn = () => {
                                         touched={touched.cpfcnpj}
                                         autoCapitalize="none"
                                         keyboarType="numeric"
+                                        maxLength={11}
                                     />
                                 <TouchableOpacity
                                         disabled={!isValid}

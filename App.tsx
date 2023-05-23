@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
@@ -24,7 +24,6 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const App = () => {
   const [appIsReady, setAppIsReady] = useState(false);
-
 
   useEffect(() => {
     async function prepare() {

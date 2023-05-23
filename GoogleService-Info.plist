@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>455668396166-m17uad5n33khqsj2177sgqofsilttkjq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.455668396166-m17uad5n33khqsj2177sgqofsilttkjq</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>455668396166-3l45pksfrqmq6kkevpm0pd5g8u42t1gg.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAOVfzvw8JFXiE_GbLxUOun0_5fFouh420</string>
+	<key>GCM_SENDER_ID</key>
+	<string>455668396166</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>br.com.lojasolarapp</string>
+	<key>PROJECT_ID</key>
+	<string>lojassolarapp</string>
+	<key>STORAGE_BUCKET</key>
+	<string>lojassolarapp.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:455668396166:ios:5df806f25e699ae6ed2107</string>
+</dict>
+</plist>

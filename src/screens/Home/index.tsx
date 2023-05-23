@@ -32,7 +32,7 @@ const Home = () => {
   useEffect(() => {
     setLoading(true);
     async function getLocationLojas() {
-      await serviceapp.get(`${URL_DATA}(WS_CARROCEL_PROMOCAO)`)
+      await serviceapp.get(`(WS_CARROCEL_PROMOCAO)`)
         .then((response) => {
           setTimeout(() => {
             setCarrocelData(response.data.resposta.data.carrocel);
@@ -145,7 +145,7 @@ const Home = () => {
                 iconButtom={<MaterialCommunityIcons name="basket-plus-outline" color={"white"} size={30} />}
               />
               <ButtomsFooter
-                onPress={() => navigation.navigate("PasswordChanged", { data: 'andersonbrasil72@gmail.com' })}
+                onPress={() => navigation.navigate("LoadImages", { user: {"connected": false, "cpfCnpj": "97755150097", "nomeCliente": "ANDERSON ROGERIO BRASIL", "token": "1645438105152023069861916154500"} })}
                 textButtom="Pagamentos"
                 iconButtom={<MaterialCommunityIcons name="barcode" color={"white"} size={30} />}
               />

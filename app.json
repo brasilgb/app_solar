@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "app_solar",
-    "slug": "app_solar",
+    "name": "lojasolarapp",
+    "slug": "lojasolarapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,13 +11,11 @@
       "resizeMode": "contain",
       "backgroundColor": "#009FE3"
     },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
+      "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "splash": {
         "image": "./assets/splash.png",
@@ -26,22 +24,27 @@
       },
       "config": {
         "googleMapsApiKey": "AIzaSyC2r8ewjxAO7eegtgzzoJ4RsrwonUkK9jQ"
-      }
+      },
+      "bundleIdentifier": "br.com.lojasolarapp"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#ffffff"
       },
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyC2r8ewjxAO7eegtgzzoJ4RsrwonUkK9jQ"
         }
       },
-      "package": "com.andersonbrodrigues.LojasSolar"
+      "package": "br.com.lojasolarapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "@react-native-firebase/app"
+    ]
   }
 }

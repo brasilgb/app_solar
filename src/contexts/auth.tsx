@@ -1,4 +1,4 @@
-import { Alert, Text, View } from "react-native";
+import { Alert } from "react-native";
 import React, { createContext, useCallback, useEffect, useState } from "react";
 import * as Location from "expo-location";
 import serviceapp from "../services/serviceapp";
@@ -6,7 +6,6 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../screens/RootStackPrams";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { URL_DATA } from "../constants";
 export const AuthContext = createContext({} as any);
 
 
@@ -51,7 +50,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
     }, []);
 
     const signIn = useCallback(async ({ cpfcnpj }: any) => {
-        const response = await serviceapp.get(`${URL_DATA}(WS_LOGIN_APP)?cpfcnpj=${cpfcnpj}`);
+        const response = await serviceapp.get(`(WS_LOGIN_APP)?cpfcnpj=${cpfcnpj}`);
         if (response.status !== 200) {
             throw new Error("Erro ao conectar ao servidor. O serviço da aplicação parece estar parado.");
         }
@@ -72,7 +71,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
 
     const checkPasswordApp = useCallback(async ({ cpfcnpj, senha, nomeCliente, connected }: any) => {
         setLoading(true);
-        const response = await serviceapp.get(`${URL_DATA}(WS_VERIFICAR_SENHA_APP)?cpfcnpj=${cpfcnpj}&senha=${senha}`);
+        const response = await serviceapp.get(`(WS_VERIFICAR_SENHA_APP)?cpfcnpj=${cpfcnpj}&senha=${senha}`);
 
         if (response.status !== 200) {
             setLoading(false);
@@ -126,6 +125,8 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
         <AuthContext.Provider value={{
             signed: !!user,
             user,
+            setUser,
+            storageUser,
             setLoading,
             loading,
             positionGlobal,

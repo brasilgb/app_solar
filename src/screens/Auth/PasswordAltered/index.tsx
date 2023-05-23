@@ -39,7 +39,7 @@ const PasswordAltered = ({ route }: any) => {
                     style={shadowForm}
                     className="flex items-center justify-center bg-solar-orange-middle mt-6 py-4 px-12 rounded-full"
                 >
-                    <Text className="text-lg font-Poppins_500Medium text-solar-blue-dark">Fazer login</Text>
+                    <Text className="text-lg w-10/12 font-Poppins_500Medium text-solar-blue-dark">Fazer login</Text>
                 </TouchableOpacity>
             </View>
         </AppLayout>

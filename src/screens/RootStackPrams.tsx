@@ -10,14 +10,20 @@ export type RootStackParamList = {
     CommonQuestions: {data: any };
     PrivacyPolice: undefined;
     SignIn: undefined;
-    CheckPassword: { data: any }
-    NoRegistry: { data: any }
-    RegisterUser: { data: any }
-    LoadCities: { data: any }
-    Registered: { data: any }
-    RegisterPassword: { data: any }
-    RegisteredStore: { data: any }
-    RegisterPasswordStore: { data:any }
-    PasswordChanged: { data:any }
-    PasswordAltered: { data:any }
+    CheckPassword: { data: any };
+    NoRegistry: { data: any };
+    RegisterUser: { data: any };
+    LoadCities: { data: any };
+    Registered: { data: any };
+    RegisterPassword: { data: any };
+    RegisteredStore: { data: any };
+    RegisterPasswordStore: { data:any };
+    PasswordChanged: { data:any };
+    PasswordAltered: { data:any };
+    AlterPassword: { user:any };
+    MyAccount: { user:any };
+    Crediary: { user:any };
+    LoadImages: { user:any };
+    ImagesSent: undefined;
+    PrivacySettings: { user:any };
 }

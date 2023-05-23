@@ -22,7 +22,7 @@ const CustomerCitiesList = () => {
 
   useEffect(() => {
     async function getLocationLojas() {
-      await serviceapp.get(`${URL_DATA}(WS_CARREGA_LOJAS)`)
+      await serviceapp.get(`(WS_CARREGA_LOJAS)`)
         .then((response) => {
           // const CordinateEmpty = response.data.resposta.data.filter((city:any) => (city.latitude !== "" && city.longitude !== ""));
         

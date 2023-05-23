@@ -27,7 +27,7 @@ const LoadCities = ({ route }: any) => {
 
   useEffect(() => {
     async function getLocationLojas() {
-      await serviceapp.get(`${URL_DATA}(WS_CARREGA_CIDADE)?uf=${data.uf}`)
+      await serviceapp.get(`(WS_CARREGA_CIDADE)?uf=${data.uf}`)
         .then((response) => {
           setMasterData(response.data.resposta.data.map((c: any) => c.cidade).filter((value: any, index: any, self: any) => self.indexOf(value) === index));
         setFilteredData(response.data.resposta.data.map((c: any) => c.cidade).filter((value: any, index: any, self: any) => self.indexOf(value) === index));

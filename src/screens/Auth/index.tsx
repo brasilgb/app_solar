@@ -8,8 +8,12 @@ import RegisteredStore from "./RegisteredStore";
 import RegisterPasswordStore from "./RegisterPasswordStore";
 import PasswordChanged from "./PasswordChanged";
 import PasswordAltered from "./PasswordAltered";
+import AlterPassword from "./AlterPassword";
+import MyAccount from "./MyAccount";
 
 export {
+    
+    AlterPassword,
     PasswordAltered,
     PasswordChanged,
     RegisterPasswordStore,
